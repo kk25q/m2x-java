@@ -6,7 +6,7 @@
 
   <groupId>com.att.m2x</groupId>
   <artifactId>m2x-java-client</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <name>Java M2X API Client</name>
@@ -27,18 +27,6 @@
   <scm>
     <url>https://github.com/attm2x/m2x-java</url>
   </scm>
-
-  <developers>
-    <developer>
-      <id>pkoshaleu</id>
-      <name>Pavel Koshaleu</name>
-      <email>pavelk@citrusbyte.com</email>
-      <roles>
-        <role>developer</role>
-      </roles>
-      <timezone>+3</timezone>
-    </developer>
-  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
