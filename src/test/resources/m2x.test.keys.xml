@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>
+		As integration tests run against the live system please specify here all required keys
+	</comment>
+	<entry key="key.master"></entry>
+
+</properties>

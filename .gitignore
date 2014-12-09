@@ -12,6 +12,3 @@ target/
 /*.iml
 /*.ipr
 /*.iws
-
-# IT test samples #
-/src/test/resources/it/it-keys.xml
