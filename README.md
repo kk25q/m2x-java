@@ -68,7 +68,7 @@ To create a client instance, do the following:
 ```
 	import com.att.m2x.client.M2XClient;
 
-	M2XClient client = new M2XClient("your api key here")
+	M2XClient client = new M2XClient("your api key here");
 ```
 
 There is another method that has endpoint parameter. You don't need to pass it unless you want to connect to a different API endpoint.
@@ -92,7 +92,26 @@ There are also a number of methods allowing you to get an instance of individual
 
 Refer to the documentation on each class for further usage instructions.
 
-The tests included into the library have a lot of examples for the most of M2X API methods.
+- Create a new device, stream and put current value into it:
+
+ 	M2XResponse response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
+	{{
+		put("name", "My Device");
+		put("visibility", "private");
+	}}));
+	String deviceId = response.json().getString("id");
+	M2XDevice device = client.device(deviceId);
+
+	M2XStream stream = device.stream("mystream");
+	stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
+
+	stream.updateValue(M2XClient.jsonSerialize(new HashMap<String, Object>()
+	{{
+		put("value", 10);
+	}}));
+
+You can find this code in [M2XClientTests.java](https://raw.github.com/attm2x/m2x-java/master/src/test/java/com/att/m2x/client/M2XClientTests.java).
+These tests have a lot of examples for the most of M2X API methods.
 To run the tests you should specify your master api key in m2x.test.keys.xml resource file.
 
 Versioning
