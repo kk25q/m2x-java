@@ -20,7 +20,7 @@ The M2X Java client is not submitted to any of the existing Maven repositories. 
 [Maven 3](http://maven.apache.org/) is required for client building. After [Maven installation](http://maven.apache.org/download.cgi) please execute
 the following command from root directory of client source code (folder where `pom.xml` file is placed) to build:
 
-```
+```bash
     mvn package install
 ```
 
@@ -31,7 +31,7 @@ Please see required libraries and their versions in the *Requirements and Depend
 
 To build client with all dependencies included please run the following command:
 
-```
+```bash
     mvn package install -P one-jar
 ```
 
@@ -44,7 +44,7 @@ Requirements and Dependencies
 The M2X Java client requires **Java version 1.5 or greater**.
 
 Add the following to pom.xml to start using M2XClient.
-```
+```xml
 <dependency>
 	<groupId>com.att.m2x</groupId>
     <artifactId>m2x-java-client</artifactId>
@@ -65,7 +65,7 @@ To create a client instance only one parameter, the API Key, is required.
 Read more about M2X API keys in the [API Keys](https://m2x.att.com/developer/documentation/v2/overview#API-Keys) section of [M2X API Documentation](https://m2x.att.com/developer/documentation/v2/overview).
 To create a client instance, do the following:
 
-```
+```java
 	import com.att.m2x.client.M2XClient;
 
 	M2XClient client = new M2XClient("your api key here");
@@ -78,7 +78,7 @@ All API responses are wrapped in M2XResponse object.
 
 - Get the list of all your keys:
 
-```
+```java
 	M2XResponse keys = client.keys(null);
 ```
 
@@ -86,7 +86,7 @@ There are also a number of methods allowing you to get an instance of individual
 
 - Get an instance of a device:
 
-```
+```java
 	M2XDevice device = client.device("your device id here");
 ```
 
@@ -94,6 +94,7 @@ Refer to the documentation on each class for further usage instructions.
 
 - Create a new device, stream and put current value into it:
 
+```java
  	M2XResponse response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
 	{{
 		put("name", "My Device");
@@ -109,8 +110,9 @@ Refer to the documentation on each class for further usage instructions.
 	{{
 		put("value", 10);
 	}}));
+```
 
-You can find this code in [M2XClientTests.java](https://raw.github.com/attm2x/m2x-java/master/src/test/java/com/att/m2x/client/M2XClientTests.java).
+You can find this code in [M2XClientTests.java](src/test/java/com/att/m2x/client/M2XClientTests.java).
 These tests have a lot of examples for the most of M2X API methods.
 To run the tests you should specify your master api key in m2x.test.keys.xml resource file.
 
