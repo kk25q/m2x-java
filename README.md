@@ -2,7 +2,7 @@ AT&T's M2X Java Client
 ==========================
 
 [AT&T’s M2X](https://m2x.att.com/) is a cloud-based fully managed data storage service for network connected machine-to-machine (M2M) devices. From trucks and turbines to vending machines and freight containers, M2X enables the devices that power your business to connect and share valuable data.
-This library aims to provide a simple wrapper to interact with the [AT&T M2X API](https://m2x.att.com/developer/documentation/overview). Refer to the [Glossary of Terms](https://m2x.att.com/developer/documentation/glossary) to understand the nomenclature used throughout this documentation.
+This library aims to provide a simple wrapper to interact with the [AT&T M2X API](https://m2x.att.com/developer/documentation/overview) for Java. Refer to the [Glossary of Terms](https://m2x.att.com/developer/documentation/glossary) to understand the nomenclature used throughout this documentation.
 
 Getting Started
 ==========================
@@ -74,6 +74,7 @@ To create a client instance, do the following:
 There is another method that has endpoint parameter. You don't need to pass it unless you want to connect to a different API endpoint.
 
 The client class provides access to API calls returning lists of the following API objects: devices, distributions, keys, charts.
+
 All API responses are wrapped in M2XResponse object.
 
 - Get the list of all your keys:
@@ -114,7 +115,7 @@ Refer to the documentation on each class for further usage instructions.
 
 You can find this code in [M2XClientTests.java](src/test/java/com/att/m2x/client/M2XClientTests.java).
 These tests have a lot of examples for the most of M2X API methods.
-To run the tests you should specify your master api key in m2x.test.keys.xml resource file.
+To run the tests you should specify your Master API Key in the m2x.test.keys.xml resource file.
 
 Versioning
 ==========================
