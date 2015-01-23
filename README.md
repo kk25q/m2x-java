@@ -2,7 +2,7 @@ AT&T's M2X Java Client
 ==========================
 
 [AT&T’s M2X](https://m2x.att.com/) is a cloud-based fully managed data storage service for network connected machine-to-machine (M2M) devices. From trucks and turbines to vending machines and freight containers, M2X enables the devices that power your business to connect and share valuable data.
-This library aims to provide a simple wrapper to interact with the [AT&T M2X API](https://m2x.att.com/developer/documentation/overview) for [Java](http://www.java.com/en/). Refer to the [Glossary of Terms](https://m2x.att.com/developer/documentation/glossary) to understand the nomenclature used throughout this documentation.
+This library aims to provide a simple wrapper to interact with the [AT&T M2X API](https://m2x.att.com/developer/documentation/v2/overview) for [Java](http://www.java.com/en/). Refer to the [Glossary of Terms](https://m2x.att.com/developer/documentation/v2/glossary) to understand the nomenclature used throughout this documentation.
 
 Getting Started
 ==========================
@@ -10,7 +10,7 @@ Getting Started
 1. Signup for an [M2X Account](https://m2x.att.com/signup).
 2. Obtain your _Master Key_ from the Master Keys tab of your [Account Settings](https://m2x.att.com/account) screen.
 2. Create your first [Device](https://m2x.att.com/devices) and copy its _Device ID_.
-3. Review the [M2X API Documentation](https://m2x.att.com/developer/documentation/overview).
+3. Review the [M2X API Documentation](https://m2x.att.com/developer/documentation/v2/overview).
 
 Setup
 ==========================
@@ -59,7 +59,7 @@ The client has the following library dependencies:
 Example
 ==========================
 
-Currently, the client supports API v2 and all M2X API documents can be found at [M2X API Documentation](https://m2x.att.com/developer/documentation/overview).
+Currently, the client supports API v2 and all M2X API documents can be found at [M2X API Documentation](https://m2x.att.com/developer/documentation/v2/overview).
 
 To create a client instance only one parameter, the API Key, is required.
 Read more about M2X API keys in the [API Keys](https://m2x.att.com/developer/documentation/v2/overview#API-Keys) section of [M2X API Documentation](https://m2x.att.com/developer/documentation/v2/overview).
