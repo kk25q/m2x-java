@@ -38,7 +38,7 @@ public final class M2XClient
 
 	static
 	{
-		String version = "2.0.0";
+		String version = "2.0.1";
 		String langVersion = System.getProperty("java.version");
 		String osVersion = System.getProperty("os.arch") + "-" + System.getProperty("os.name") + System.getProperty("os.version");
 		USER_AGENT = String.format("M2X-Java/%s java/%s (%s)", version, langVersion, osVersion);
