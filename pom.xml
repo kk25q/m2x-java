@@ -90,7 +90,7 @@
 								</goals>
 								<configuration>
 									<appendAssemblyId>false</appendAssemblyId>
-									<finalName>${pom.build.finalName}-one-jar</finalName>
+									<finalName>${project.build.finalName}-one-jar</finalName>
 								</configuration>
 							</execution>
 						</executions>
