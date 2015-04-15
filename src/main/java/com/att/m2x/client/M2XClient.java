@@ -85,14 +85,14 @@ public final class M2XClient
 	}
 
 	/**
-	 * List Device Groups
-	 * Retrieve the list of device groups for the authenticated user.
+	 * List Device Tags
+	 * Retrieve the list of device tags for the authenticated user.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Device-Groups
+	 * https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags
 	 */
-	public M2XResponse deviceGroups(String query) throws IOException
+	public M2XResponse deviceTags(String query) throws IOException
 	{
-		return makeRequest("GET", M2XDevice.URL_PATH + "/groups", query, null);
+		return makeRequest("GET", M2XDevice.URL_PATH + "/tags", query, null);
 	}
 
 	/**
