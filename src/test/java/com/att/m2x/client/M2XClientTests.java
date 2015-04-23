@@ -159,7 +159,7 @@ public class M2XClientTests extends M2XTestBase
 
 		// device
 
-		response = client.deviceGroups(null);
+		response = client.deviceTags(null);
 		assertThat(response.status, is(200));
 		assertThat(response.success(), is(true));
 		assertThat(response.error(), is(false));
