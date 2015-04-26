@@ -1,4 +1,4 @@
-package com.att.m2x.client;
+package com.att.m2x.java;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public final class M2XTrigger extends M2XClass
 	/**
 	 * Test the specified trigger by firing it with a fake value.
 	 *
-	 * This method can be used by developers of client applications
+	 * This method can be used by developers of java applications
 	 * to test the way their apps receive and handle M2X notifications.
 	 *
 	 * https://m2x.att.com/developer/documentation/v2/device#Test-Trigger

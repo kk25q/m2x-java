@@ -67,7 +67,7 @@ Read more about M2X API keys in the [API Keys](https://m2x.att.com/developer/doc
 To create a client instance, do the following:
 
 ```java
-	import com.att.m2x.client.M2XClient;
+	import com.att.m2x.java.M2XClient;
 
 	M2XClient client = new M2XClient("your api key here");
 ```

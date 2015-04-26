@@ -1,4 +1,4 @@
-package com.att.m2x.client;
+package com.att.m2x.java;
 
 import java.io.IOException;
 
