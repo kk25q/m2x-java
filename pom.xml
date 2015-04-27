@@ -28,6 +28,24 @@
 		<url>https://github.com/attm2x/m2x-java</url>
 	</scm>
 
+	<developers>
+		<developer>
+			<id>kristinpeterson</id>
+			<name>Kristin Peterson</name>
+			<email>kristin.peterson@citrusbyte.com</email>
+			<url>http://www.kristinpeterson.me</url>
+			<organization>Citrusbyte</organization>
+			<organizationUrl>http://www.citrusbyte.com</organizationUrl>
+			<roles>
+				<role>project manager</role>
+			</roles>
+			<timezone>America/Los_Angeles</timezone>
+			<properties>
+				<picUrl>https://en.gravatar.com/userimage/38620390/a0d0e72af9552b4ca9da72f1ce41cf97.jpg?size=200</picUrl>
+			</properties>
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.5</java.version>
