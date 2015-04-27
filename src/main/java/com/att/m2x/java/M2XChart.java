@@ -3,8 +3,9 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Charts API
- * https://m2x.att.com/developer/documentation/v2/charts
+ * Wrapper for AT&amp;T M2X Charts API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/charts">M2X Charts API Documentation</a>
  */
 public final class M2XChart extends M2XClass
 {
@@ -31,7 +32,9 @@ public final class M2XChart extends M2XClass
 	 * This method is public and therefore it does not require
 	 * the user to authenticate himself using an API key.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#View-Chart-Details
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#View-Chart-Details">https://m2x.att.com/developer/documentation/v2/charts#View-Chart-Details</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -41,7 +44,10 @@ public final class M2XChart extends M2XClass
 	/**
 	 * Update an existing chart.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#Update-Chart
+	 * @param jsonContent parameters for the chart to be updated as JSON formatted String
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Update-Chart">https://m2x.att.com/developer/documentation/v2/charts#Update-Chart</a>
 	 */
 	public M2XResponse update(String jsonContent) throws IOException
 	{
@@ -51,7 +57,9 @@ public final class M2XChart extends M2XClass
 	/**
 	 * Delete an existing chart.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#Delete-Chart
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Delete-Chart">https://m2x.att.com/developer/documentation/v2/charts#Delete-Chart</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{
@@ -59,12 +67,15 @@ public final class M2XChart extends M2XClass
 	}
 
 	/**
-	 * Generally used in the src attribute of an <img> html tag.
+	 * Generally used in the src attribute of an html img tag.
 	 *
 	 * This method is public and therefore it does not require
 	 * the user to authenticate himself using an API key.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#Render-Chart
+	 * @param format the format of the chart image being returned
+	 * @param query query parameters (optional)
+	 * @return image of the chart in the given format
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Render-Chart">https://m2x.att.com/developer/documentation/v2/charts#Render-Chart</a>
 	 */
 	public String renderUrl(String format, String query)
 	{

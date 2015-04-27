@@ -3,9 +3,10 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Data Streams API
- * https://m2x.att.com/developer/documentation/v2/device
- * https://m2x.att.com/developer/documentation/v2/distribution
+ * Wrapper for AT&amp;T M2X Data Streams API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/device">M2X Device API Documentation</a>
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution">M2X Distribution API Documentation</a>
  */
 public final class M2XStream extends M2XClass
 {
@@ -37,8 +38,11 @@ public final class M2XStream extends M2XClass
 	 * Update a data stream associated with the Device or specified distribution
 	 * (if a stream with this name does not exist it gets created).
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream
+	 * @param jsonContent parameters for the stream to be created/updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream</a>
 	 */
 	public M2XResponse createOrUpdate(String jsonContent) throws IOException
 	{
@@ -48,7 +52,10 @@ public final class M2XStream extends M2XClass
 	/**
 	 * Update the current value of the stream.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value
+	 * @param jsonContent parameters for the stream to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value">https://m2x.att.com/developer/documentation/v2/device#Update-Data-Stream-Value</a>
 	 */
 	public M2XResponse updateValue(String jsonContent) throws IOException
 	{
@@ -58,8 +65,10 @@ public final class M2XStream extends M2XClass
 	/**
 	 * Get details of a specific data Stream associated with an existing device or distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream
-	 * https://m2x.att.com/developer/documentation/v2/distribution#View-Data-Stream
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#View-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#View-Data-Stream</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -70,7 +79,10 @@ public final class M2XStream extends M2XClass
 	 * List values from the stream, sorted in reverse chronological order
 	 * (most recent values first).
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values">https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values</a>
 	 */
 	public M2XResponse values(String query) throws IOException
 	{
@@ -83,7 +95,10 @@ public final class M2XStream extends M2XClass
 	 *
 	 * This method only works for numeric streams
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling
+	 * @param query query parameters
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling">https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling</a>
 	 */
 	public M2XResponse sampling(String query) throws IOException
 	{
@@ -96,7 +111,10 @@ public final class M2XStream extends M2XClass
 	 *
 	 * This method only works for numeric streams
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats">https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Stats</a>
 	 */
 	public M2XResponse stats(String query) throws IOException
 	{
@@ -106,17 +124,22 @@ public final class M2XStream extends M2XClass
 	/**
 	 * Post multiple values to the stream
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values
+	 * @param jsonContent parameters for the stream to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values">https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values</a>
 	 */
-	public M2XResponse postValues(String jsonContent) throws IOException
-	{
+	public M2XResponse postValues(String jsonContent) throws IOException {
 		return makePost("/values", jsonContent);
 	}
 
 	/**
 	 * Delete values in a stream by a date range
 	 *
-	 * https://m2x.com/developer/documentation/v2/device#Delete-Data-Stream-Values
+	 * @param query query parameters
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream-Values">https://m2x.com/developer/documentation/v2/device#Delete-Data-Stream-Values</a>
 	 */
 	public M2XResponse deleteValues(String query) throws IOException
 	{
@@ -126,8 +149,10 @@ public final class M2XStream extends M2XClass
 	/**
 	 * Delete an existing data stream associated with a specific device or distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Delete-Data-Stream
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Delete-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#Delete-Data-Stream</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{

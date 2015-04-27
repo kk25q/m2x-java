@@ -3,9 +3,10 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Triggers API
- * https://m2x.att.com/developer/documentation/v2/device
- * https://m2x.att.com/developer/documentation/v2/distribution
+ * Wrapper for AT&amp;T M2X Triggers API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/device">M2X Device API Documentation</a>
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution">M2X Distribution API Documentation</a>
  */
 public final class M2XTrigger extends M2XClass
 {
@@ -36,8 +37,10 @@ public final class M2XTrigger extends M2XClass
 	/**
 	 * Get details of a specific trigger associated with an existing device or distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#View-Trigger
-	 * https://m2x.att.com/developer/documentation/v2/distribution#View-Trigger
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Trigger">https://m2x.att.com/developer/documentation/v2/device#View-Trigger</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#View-Trigger">https://m2x.att.com/developer/documentation/v2/distribution#View-Trigger</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -47,8 +50,10 @@ public final class M2XTrigger extends M2XClass
 	/**
 	 * Update an existing trigger associated with the specified device or distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Update-Trigger
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Update-Trigger
+	 * @param jsonContent parameters for the trigger to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Trigger">https://m2x.att.com/developer/documentation/v2/device#Update-Trigger</a>
 	 */
 	public M2XResponse update(String jsonContent) throws IOException
 	{
@@ -61,8 +66,11 @@ public final class M2XTrigger extends M2XClass
 	 * This method can be used by developers of java applications
 	 * to test the way their apps receive and handle M2X notifications.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Test-Trigger
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Test-Trigger
+	 * @param jsonContent parameters for the trigger to be tested as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Test-Trigger">https://m2x.att.com/developer/documentation/v2/device#Test-Trigger</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Test-Trigger">https://m2x.att.com/developer/documentation/v2/distribution#Test-Trigger</a>
 	 */
 	public M2XResponse test(String jsonContent) throws IOException
 	{
@@ -72,8 +80,10 @@ public final class M2XTrigger extends M2XClass
 	/**
 	 * Delete an existing trigger associated with a specific device or distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Delete-Trigger
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Delete-Trigger
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Trigger">https://m2x.att.com/developer/documentation/v2/device#Delete-Trigger</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Delete-Trigger">https://m2x.att.com/developer/documentation/v2/distribution#Delete-Trigger</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{

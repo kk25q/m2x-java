@@ -10,7 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Wrapper for AT&T M2X API response
+ * Wrapper for AT&amp;T M2X API response
+ *
  */
 public final class M2XResponse
 {
@@ -44,6 +45,8 @@ public final class M2XResponse
 
 	/**
 	 * Returns the parsed response body.
+	 *
+	 * @return the parsed response body as JSON objecet
 	 */
 	public JSONObject json()
 	{
@@ -63,20 +66,29 @@ public final class M2XResponse
 
 	/**
 	 * Returns whether status is a success (status code 2xx)
+	 *
+	 * @return true if response is success (status code 2xx)
 	 */
 	public boolean success() { return this.status >= 200 && this.status < 300; }
 
 	/**
 	 * Returns whether status is one of 4xx
+	 *
+	 * @return true if response is 4xx
 	 */
 	public boolean clientError() { return this.status >= 400 && this.status < 500; }
+
 	/**
 	 * Returns whether status is one of 5xx
+	 *
+	 * @return true if response is 5xx
 	 */
 	public boolean serverError() { return this.status >= 500 && this.status < 600; }
 
 	/**
 	 * Returns whether clientError or serverError is true
+	 *
+	 * @return true if response is client or server error
 	 */
 	public boolean error() { return this.clientError() || this.serverError(); }
 

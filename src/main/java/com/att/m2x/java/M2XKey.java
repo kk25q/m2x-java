@@ -3,8 +3,9 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Keys API
- * https://m2x.att.com/developer/documentation/v2/keys
+ * Wrapper for AT&amp;T M2X Keys API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/keys">M2X Keys API Documentation</a>
  */
 public final class M2XKey extends M2XClass
 {
@@ -28,7 +29,9 @@ public final class M2XKey extends M2XClass
 	/**
 	 * Get details of a specific key associated with a developer account.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details">https://m2x.att.com/developer/documentation/v2/keys#View-Key-Details</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -39,7 +42,10 @@ public final class M2XKey extends M2XClass
 	 * Update name, stream, permissions, expiration date, origin or device access
 	 * of an existing key associated with the specified account.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#Update-Key
+	 * @param jsonContent parameters for the key to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#Update-Key">https://m2x.att.com/developer/documentation/v2/keys#Update-Key</a>
 	 */
 	public M2XResponse update(String jsonContent) throws IOException
 	{
@@ -49,7 +55,9 @@ public final class M2XKey extends M2XClass
 	/**
 	 * Regenerate the specified key.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key">https://m2x.att.com/developer/documentation/v2/keys#Regenerate-Key</a>
 	 */
 	public M2XResponse regenerate() throws IOException
 	{
@@ -59,7 +67,9 @@ public final class M2XKey extends M2XClass
 	/**
 	 * Delete an existing key.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#Delete-Key
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#Delete-Key">https://m2x.att.com/developer/documentation/v2/keys#Delete-Key</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{

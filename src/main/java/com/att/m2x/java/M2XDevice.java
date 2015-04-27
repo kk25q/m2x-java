@@ -3,8 +3,9 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Device API
- * https://m2x.att.com/developer/documentation/v2/device
+ * Wrapper for AT&amp;T M2X Device API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/device">M2X Device API Documentation</a>
  */
 public final class M2XDevice extends M2XClass
 {
@@ -28,7 +29,10 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Update an existing Device's information.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details
+	 * @param jsonContent parameters for the device to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details">https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details</a>
 	 */
 	public M2XResponse update(String jsonContent) throws IOException
 	{
@@ -38,7 +42,9 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Get details of an existing Device.
 	 *
-	 *  https://m2x.att.com/developer/documentation/v2/device#View-Device-Details
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Device-Details">https://m2x.att.com/developer/documentation/v2/device#View-Device-Details</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -48,7 +54,9 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Get location details of an existing Device.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location"></a>
 	 */
 	public M2XResponse location() throws IOException
 	{
@@ -58,7 +66,10 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Update the current location of the specified device.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location
+	 * @param jsonContent parameters for the device to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Location">https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location</a>
 	 */
 	public M2XResponse updateLocation(String jsonContent) throws IOException
 	{
@@ -68,15 +79,20 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Retrieve list of data streams associated with the device.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams">https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams</a>
 	 */
-	public M2XResponse streams(String query) throws IOException
+	public M2XResponse streams() throws IOException
 	{
-		return makeGet(M2XStream.URL_PATH, query);
+		return makeGet(M2XStream.URL_PATH, null);
 	}
 
 	/**
 	 * Get a wrapper to access a data stream associated with the specified Device.
+	 *
+	 * @param streamName the name of the stream
+	 * @return the stream for this device with the given stream name
 	 */
 	public M2XStream stream(String streamName)
 	{
@@ -86,7 +102,10 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Post values to multiple streams at once.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-
+	 * @param jsonContent parameters for the device to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-">https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-</a>
 	 */
 	public M2XResponse postUpdates(String jsonContent) throws IOException
 	{
@@ -98,15 +117,25 @@ public final class M2XDevice extends M2XClass
 	 *
 	 * https://m2x.att.com/developer/documentation/v2/device#List-Triggers
 	 */
-	public M2XResponse triggers(String query) throws IOException
+	/**
+	 * Retrieve list of triggers associated with the specified device.
+	 *
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Triggers">https://m2x.att.com/developer/documentation/v2/device#List-Triggers</a>
+	 */
+	public M2XResponse triggers() throws IOException
 	{
-		return makeGet(M2XTrigger.URL_PATH, query);
+		return makeGet(M2XTrigger.URL_PATH, null);
 	}
 
 	/**
 	 * Create a new trigger associated with the specified device.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Create-Trigger
+	 * @param jsonContent parameters for the trigger to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Trigger">https://m2x.att.com/developer/documentation/v2/device#Create-Trigger</a>
 	 */
 	public M2XResponse createTrigger(String jsonContent) throws IOException
 	{
@@ -115,6 +144,9 @@ public final class M2XDevice extends M2XClass
 
 	/**
 	 * Get a wrapper to access a trigger associated with the specified Device.
+	 *
+	 * @param triggerId the trigger id
+	 * @return the trigger for this device with the given triggerId
 	 */
 	public M2XTrigger trigger(String triggerId)
 	{
@@ -124,17 +156,21 @@ public final class M2XDevice extends M2XClass
 	/**
 	 * Retrieve list of HTTP requests received lately by the specified device (up to 100 entries).
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#View-Request-Log
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Request-Log">https://m2x.att.com/developer/documentation/v2/device#View-Request-Log</a>
 	 */
-	public M2XResponse log(String query) throws IOException
+	public M2XResponse log() throws IOException
 	{
-		return makeGet("/log", query);
+		return makeGet("/log", null);
 	}
 
 	/**
 	 * Delete an existing device.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Delete-Device
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Device">https://m2x.att.com/developer/documentation/v2/device#Delete-Device</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{

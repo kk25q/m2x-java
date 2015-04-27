@@ -15,8 +15,9 @@ import org.json.JSONObject;
 import org.json.JSONStringer;
 
 /**
- * Wrapper for AT&T M2X API
- * https://m2x.att.com/developer/documentation/v2/overview
+ * Wrapper for AT&amp;T M2X API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/overview">M2X API Documentation</a>
  */
 public final class M2XClient
 {
@@ -33,6 +34,7 @@ public final class M2XClient
 
 	/**
 	 * The last API call response
+	 *
 	 */
 	public volatile M2XResponse lastResponse = null;
 
@@ -48,6 +50,7 @@ public final class M2XClient
 	{
 		this(apiKey, API_ENDPOINT);
 	}
+
 	public M2XClient(String apiKey, String endpoint)
 	{
 		assert endpoint != null && endpoint.length() > 0;
@@ -66,7 +69,10 @@ public final class M2XClient
 	 * metadata, locations, streams list, and view each Devices' stream metadata
 	 * and its values.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog">https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog</a>
 	 */
 	public M2XResponse deviceCatalog(String query) throws IOException
 	{
@@ -77,7 +83,10 @@ public final class M2XClient
 	 * Retrieve the list of devices accessible by the authenticated API key that
 	 * meet the search criteria.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices">https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices</a>
 	 */
 	public M2XResponse devices(String query) throws IOException
 	{
@@ -88,17 +97,22 @@ public final class M2XClient
 	 * List Device Tags
 	 * Retrieve the list of device tags for the authenticated user.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags">https://m2x.att.com/developer/documentation/v2/device#List-Device-Tags</a>
 	 */
-	public M2XResponse deviceTags(String query) throws IOException
+	public M2XResponse deviceTags() throws IOException
 	{
-		return makeRequest("GET", M2XDevice.URL_PATH + "/tags", query, null);
+		return makeRequest("GET", M2XDevice.URL_PATH + "/tags", null, null);
 	}
 
 	/**
 	 * Create a new device
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#Create-Device
+	 * @param jsonContent parameters for the device to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Device">https://m2x.att.com/developer/documentation/v2/device#Create-Device</a>
 	 */
 	public M2XResponse createDevice(String jsonContent) throws IOException
 	{
@@ -107,6 +121,9 @@ public final class M2XClient
 
 	/**
 	 * Get a wrapper to access an existing Device.
+	 *
+	 * @param deviceId the id of the device
+	 * @return the M2X device associated with the given deviceId
 	 */
 	public M2XDevice device(String deviceId)
 	{
@@ -118,17 +135,22 @@ public final class M2XClient
 	/**
 	 * Retrieve list of device distributions accessible by the authenticated API key.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions">https://m2x.att.com/developer/documentation/v2/distribution#List-Distributions</a>
 	 */
-	public M2XResponse distributions(String query) throws IOException
+	public M2XResponse distributions() throws IOException
 	{
-		return makeRequest("GET", M2XDistribution.URL_PATH, query, null);
+		return makeRequest("GET", M2XDistribution.URL_PATH, null, null);
 	}
 
 	/**
 	 * Create a new device distribution
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution
+	 * @param jsonContent parameters for the distribution to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#Create-Distribution</a>
 	 */
 	public M2XResponse createDistribution(String jsonContent) throws IOException
 	{
@@ -137,6 +159,9 @@ public final class M2XClient
 
 	/**
 	 * Get a wrapper to access an existing device distribution.
+	 *
+	 * @param distributionId the id of the distribution
+	 * @return the M2X distribution associated with the given distributionId
 	 */
 	public M2XDistribution distribution(String distributionId)
 	{
@@ -148,7 +173,10 @@ public final class M2XClient
 	/**
 	 * Retrieve list of keys associated with the specified account.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#List-Keys
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#List-Keys">https://m2x.att.com/developer/documentation/v2/keys#List-Keys</a>
 	 */
 	public M2XResponse keys(String query) throws IOException
 	{
@@ -158,7 +186,10 @@ public final class M2XClient
 	/**
 	 * Create a new key associated with the specified account.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/keys#Create-Key
+	 * @param jsonContent parameters for the key to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/keys#Create-Key">https://m2x.att.com/developer/documentation/v2/keys#Create-Key</a>
 	 */
 	public M2XResponse createKey(String jsonContent) throws IOException
 	{
@@ -167,6 +198,9 @@ public final class M2XClient
 
 	/**
 	 * Get a wrapper to access an existing key associated with the specified account.
+	 *
+	 * @param key the API key
+	 * @return the M2X key associated with the given key
 	 */
 	public M2XKey key(String key)
 	{
@@ -178,7 +212,10 @@ public final class M2XClient
 	/**
 	 * Retrieve the list of charts that belong to the authenticated user.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#List-Charts
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#List-Charts">https://m2x.att.com/developer/documentation/v2/charts#List-Charts</a>
 	 */
 	public M2XResponse charts(String query) throws IOException
 	{
@@ -188,7 +225,14 @@ public final class M2XClient
 	/**
 	 * Create a new chart associated with the authenticated account.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/charts#Create-Chart
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Create-Chart">https://m2x.att.com/developer/documentation/v2/charts#Create-Chart</a>
+	 */
+	/**
+	 *
+	 * @param jsonContent parameters for the chart to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Create-Chart">https://m2x.att.com/developer/documentation/v2/charts#Create-Chart</a>
 	 */
 	public M2XResponse createChart(String jsonContent) throws IOException
 	{
@@ -197,6 +241,9 @@ public final class M2XClient
 
 	/**
 	 * Get a wrapper to access an existing chart.
+	 *
+	 * @param chartId the chart id
+	 * @return the M2X chart associated with the given chartId
 	 */
 	public M2XChart chart(String chartId)
 	{
@@ -206,13 +253,14 @@ public final class M2XClient
 	// Common
 
 	/**
-	 * Makes a call to AT&T M2X API
+	 * Makes a call to AT&amp;T M2X API
+	 *
 	 * @param method the HTTP method (GET/POST/PUT/DELETE)
 	 * @param path the API URL path (optional)
 	 * @param query the API URL query parameters (optional)
 	 * @param jsonContent the POST/PUT/DELETE content (optional)
 	 * @return the API response
-	 * @throws IOException
+	 * @throws IOException if an input or output exception occurred
 	 */
 	public M2XResponse makeRequest(String method, String path, String query, String jsonContent)
 		throws IOException
@@ -233,7 +281,8 @@ public final class M2XClient
 	}
 
 	/**
-	 * Builds url to AT&T M2X API
+	 * Builds url to AT&amp;T M2X API
+	 *
 	 * @param path the API URL path (optional)
 	 * @param query the API URL query parameters (optional)
 	 * @return full url
@@ -250,6 +299,9 @@ public final class M2XClient
 
 	/**
 	 * Serializes all fields of a given object to query string
+	 *
+	 * @param obj the object used to construct query string
+	 * @return the given object as serialized query string
 	 */
 	public static String objectToQuery(Object obj)
 	{
@@ -281,8 +333,12 @@ public final class M2XClient
 		}
 		return sb.toString();
 	}
+
 	/**
 	 * Serializes a given map to query string
+	 *
+	 * @param map the map used to construct query string
+	 * @return the given map as serialized query string
 	 */
 	public static String mapToQuery(Map<String, String> map)
 	{
@@ -308,15 +364,22 @@ public final class M2XClient
 
 	/**
 	 * Serializes a given object into json string using JSONObject
-	 * http://www.json.org/javadoc/org/json/JSONObject.html#JSONObject(java.lang.Object)
+	 *
+	 * @param obj the object used to construct serialized JSON string
+	 * @return the given object as serialized JSON string
+	 * @see <a href="http://www.json.org/javadoc/org/json/JSONObject.html#JSONObject(java.lang.Object)">http://www.json.org/javadoc/org/json/JSONObject.html#JSONObject(java.lang.Object)</a>
 	 */
 	public static String jsonSerialize(Object obj)
 	{
 		JSONObject json = new JSONObject(obj);
 		return json.toString();
 	}
+
 	/**
 	 * Serializes a given map into json string
+	 *
+	 * @param map the map used to construct serialized JSON string
+	 * @return the given map as serialized JSON string
 	 */
 	public static String jsonSerialize(Map<String, Object> map)
 	{
@@ -333,6 +396,9 @@ public final class M2XClient
 
 	/**
 	 * Formats a Date value to an ISO8601 timestamp
+	 *
+	 * @param dateTime the Date object being converted
+	 * @return the given Date object as an ISO8601 timestamp formatted string
 	 */
 	public static String dateTimeToString(Date dateTime)
 	{

@@ -3,8 +3,9 @@ package com.att.m2x.java;
 import java.io.IOException;
 
 /**
- * Wrapper for AT&T M2X Distribution API
- * https://m2x.att.com/developer/documentation/v2/distribution
+ * Wrapper for AT&amp;T M2X Distribution API
+ *
+ * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution">M2X Distribution API Documentation</a>
  */
 public final class M2XDistribution extends M2XClass
 {
@@ -28,7 +29,9 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Retrieve information about an existing device distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details">https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details</a>
 	 */
 	public M2XResponse details() throws IOException
 	{
@@ -38,7 +41,10 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Update an existing device distribution's information.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Details
+	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Details">https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Details</a>
 	 */
 	public M2XResponse update(String jsonContent) throws IOException
 	{
@@ -48,17 +54,22 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Retrieve list of devices added to the specified distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#List-Devices-from-an-existing-Distribution
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#List-Devices-from-an-existing-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#List-Devices-from-an-existing-Distribution</a>
 	 */
-	public M2XResponse devices(String query) throws IOException
+	public M2XResponse devices() throws IOException
 	{
-		return makeGet(M2XDevice.URL_PATH, query);
+		return makeGet(M2XDevice.URL_PATH, null);
 	}
 
 	/**
 	 * Add a new device to an existing distribution
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution
+	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution</a>
 	 */
 	public M2XResponse addDevice(String jsonContent) throws IOException
 	{
@@ -68,7 +79,9 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Delete an existing device distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Delete-Distribution
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Delete-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#Delete-Distribution</a>
 	 */
 	public M2XResponse delete() throws IOException
 	{
@@ -78,15 +91,20 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Retrieve list of data streams associated with the specified distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#List-Data-Streams
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#List-Data-Streams">https://m2x.att.com/developer/documentation/v2/distribution#List-Data-Streams</a>
 	 */
-	public M2XResponse streams(String query) throws IOException
+	public M2XResponse streams() throws IOException
 	{
-		return makeGet(M2XStream.URL_PATH, query);
+		return makeGet(M2XStream.URL_PATH, null);
 	}
 
 	/**
 	 * Get a wrapper to access a data stream associated with the specified distribution
+	 *
+	 * @param streamName the stream name
+	 * @return the stream for this distribution with the given stream name
 	 */
 	public M2XStream stream(String streamName)
 	{
@@ -96,17 +114,22 @@ public final class M2XDistribution extends M2XClass
 	/**
 	 * Retrieve list of triggers associated with the specified distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#List-Triggers
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#List-Triggers">https://m2x.att.com/developer/documentation/v2/distribution#List-Triggers</a>
 	 */
-	public M2XResponse triggers(String query) throws IOException
+	public M2XResponse triggers() throws IOException
 	{
-		return makeGet(M2XTrigger.URL_PATH, query);
+		return makeGet(M2XTrigger.URL_PATH, null);
 	}
 
 	/**
 	 * Create a new trigger associated with the specified distribution.
 	 *
-	 * https://m2x.att.com/developer/documentation/v2/distribution#Create-Trigger
+	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Trigger">https://m2x.att.com/developer/documentation/v2/distribution#Create-Trigger</a>
 	 */
 	public M2XResponse createTrigger(String jsonContent) throws IOException
 	{
@@ -115,6 +138,9 @@ public final class M2XDistribution extends M2XClass
 
 	/**
 	 * Get a wrapper to access a trigger associated with the specified distribution.
+	 *
+	 * @param triggerId the trigger id
+	 * @return the trigger for this device with the given triggerId
 	 */
 	public M2XTrigger trigger(String triggerId)
 	{

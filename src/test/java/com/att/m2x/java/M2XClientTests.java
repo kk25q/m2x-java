@@ -159,7 +159,7 @@ public class M2XClientTests extends M2XTestBase
 
 		// device
 
-		response = client.deviceTags(null);
+		response = client.deviceTags();
 		assertThat(response.status, is(200));
 		assertThat(response.success(), is(true));
 		assertThat(response.error(), is(false));
@@ -233,7 +233,7 @@ public class M2XClientTests extends M2XTestBase
 		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
-		response = device.streams(null);
+		response = device.streams();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
 
@@ -308,7 +308,7 @@ public class M2XClientTests extends M2XTestBase
 
 		Thread.sleep(1000);
 
-		response = device.triggers(null);
+		response = device.triggers();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("triggers").length(), greaterThan(0));
 
@@ -339,7 +339,7 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(204));
 
-		response = device.log(null);
+		response = device.log();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("requests").length(), greaterThan(0));
 
@@ -374,7 +374,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(distributionId.length(), greaterThan(0));
 		distribution = client.distribution(distributionId);
 
-		response = client.distributions(null);
+		response = client.distributions();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("distributions").length(), greaterThan(0));
 
@@ -403,7 +403,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.json().getString("status"), is("enabled"));
 		assertThat(response.json().getJSONObject("devices").getInt("total"), is(1));
 
-		response = distribution.devices(null);
+		response = distribution.devices();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("devices").length(), is(1));
 
@@ -413,7 +413,7 @@ public class M2XClientTests extends M2XTestBase
 		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
-		response = distribution.streams(null);
+		response = distribution.streams();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
 
@@ -441,7 +441,7 @@ public class M2XClientTests extends M2XTestBase
 
 		Thread.sleep(1000);
 
-		response = distribution.triggers(null);
+		response = distribution.triggers();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("triggers").length(), greaterThan(0));
 
