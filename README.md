@@ -49,7 +49,7 @@ Add the following to pom.xml to start using M2XClient.
 <dependency>
 	<groupId>com.att.m2x</groupId>
     <artifactId>java</artifactId>
-	<version>2.1.0</version>
+	<version>2.2.0</version>
 </dependency>
 ```
 
