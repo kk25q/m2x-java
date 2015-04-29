@@ -8,52 +8,39 @@ The [AT&T M2X API](https://m2x.att.com/developer/documentation/overview) provide
 Getting Started
 ==========================
 
-1. Signup for an [M2X Account](https://m2x.att.com/signup).
-2. Obtain your _Master Key_ from the Master Keys tab of your [Account Settings](https://m2x.att.com/account) screen.
-2. Create your first [Device](https://m2x.att.com/devices) and copy its _Device ID_.
-3. Review the [M2X API Documentation](https://m2x.att.com/developer/documentation/overview).
+1. Signup for an [M2X Account](https://m2x.att.com/signup)
+2. Obtain your _Master Key_ from the [Master Keys](https://m2x.att.com/account#master-keys) tab of your M2X Account Settings.
+3. Review the [M2X API Documentation](https://m2x.att.com/developer/documentation/overview)
 
 Setup
 ==========================
 
-The M2X Java client is not submitted to any of the existing Maven repositories. To start using it now, please build and install it locally.
+### Via Maven Central Repository (Recommended)
+We've added the M2X Java Client Library to the [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%20com.att.m2x%20a%3A%20java) to make it easy for you to add it as a dependency to your Java based project.
 
-[Maven 3](http://maven.apache.org/) is required for client building. After [Maven installation](http://maven.apache.org/download.cgi) please execute
-the following command from root directory of client source code (folder where `pom.xml` file is placed) to build:
+To include the M2X Java Client Library in your project, add the following to your project's `pom.xml` :
 
-```bash
-    mvn package install
+```xml
+    <dependencies>
+        <dependency>
+            <groupId>com.att.m2x</groupId>
+            <artifactId>java</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+    </dependencies>
 ```
 
-`install` can be omitted in case the client is used in a non-Maven environment.
+### Manual Installation
 
-Afterwards, the client's jar will be created in the `target` directory. By default, Maven builds jar files without dependencies.
-Please see required libraries and their versions in the *Requirements and Dependencies* section.
-
-To build client with all dependencies included please run the following command:
-
-```bash
-    mvn package install -P one-jar
-```
-
-See `target` directory for jar with `one-jar` suffix in the name.
-
+1. Obtain the `com.att.m2x.java-v.v.v-one-jar.jar` for the [latest version](https://github.com/attm2x/m2x-java/releases/latest) of the M2X Java Client Library. Note: you must use the `one-jar` jar file, as this includes all M2X Java Client Library dependancies
+2. Add the `com.att.m2x.java-v.v.v-one-jar.jar` as a dependency for your project via your IDE of choice
 
 Requirements and Dependencies
 ==========================
 
 The M2X Java client requires **Java version 1.5 or greater**.
 
-Add the following to pom.xml to start using M2XClient.
-```xml
-<dependency>
-	<groupId>com.att.m2x</groupId>
-    <artifactId>java</artifactId>
-	<version>2.2.0</version>
-</dependency>
-```
-
-The client has the following library dependencies:
+The client has the following library dependencies, though if you followed the Setup instructions from above all dependencies will be included automatically:
 * JSON in Java, 20140107, http://www.JSON.org/
 
 
