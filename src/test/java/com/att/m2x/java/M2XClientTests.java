@@ -330,6 +330,22 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(204));
 
+		// stream
+
+		stream = distribution.stream("testdevicestream");
+		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
+		assertThat(response.status, is(201));
+
+		response = distribution.streams();
+		assertThat(response.status, is(200));
+		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
+
+		Thread.sleep(1000);
+
+		response = stream.details();
+		assertThat(response.status, is(200));
+		assertThat(response.json().getString("name"), is(stream.streamName));
+
 		// device
 
 		response = distribution.addDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
@@ -351,31 +367,15 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("devices").length(), is(1));
 
-		// stream
-
-		stream = distribution.stream("testdevicestream");
-		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
-		assertThat(response.status, is(201));
-
-		response = distribution.streams();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
-
 		Thread.sleep(1000);
-
-		response = stream.details();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getString("name"), is(stream.streamName));
-
-		Thread.sleep(1000);
-
-		response = stream.delete();
-		assertThat(response.status, is(204));
-		stream = null;
 
 		response = device.delete();
 		assertThat(response.status, is(204));
 		device = null;
+
+		response = stream.delete();
+		assertThat(response.status, is(204));
+		stream = null;
 
 		response = distribution.delete();
 		assertThat(response.status, is(204));
