@@ -111,39 +111,4 @@ public final class M2XDistribution extends M2XClass
 		return new M2XStream(streamName, null, this);
 	}
 
-	/**
-	 * Retrieve list of triggers associated with the specified distribution.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#List-Triggers">https://m2x.att.com/developer/documentation/v2/distribution#List-Triggers</a>
-	 */
-	public M2XResponse triggers() throws IOException
-	{
-		return makeGet(M2XTrigger.URL_PATH, null);
-	}
-
-	/**
-	 * Create a new trigger associated with the specified distribution.
-	 *
-	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Trigger">https://m2x.att.com/developer/documentation/v2/distribution#Create-Trigger</a>
-	 */
-	public M2XResponse createTrigger(String jsonContent) throws IOException
-	{
-		return makePost(M2XTrigger.URL_PATH, jsonContent);
-	}
-
-	/**
-	 * Get a wrapper to access a trigger associated with the specified distribution.
-	 *
-	 * @param triggerId the trigger id
-	 * @return the trigger for this device with the given triggerId
-	 */
-	public M2XTrigger trigger(String triggerId)
-	{
-		return new M2XTrigger(triggerId, null, this);
-	}
 }
