@@ -237,7 +237,7 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(202));
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = stream.details();
 		assertThat(response.status, is(200));
@@ -254,7 +254,7 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(202));
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = stream.sampling("type=sum&interval=100");
 		assertThat(response.status, is(200));
@@ -340,7 +340,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = stream.details();
 		assertThat(response.status, is(200));
@@ -367,7 +367,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("devices").length(), is(1));
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = device.delete();
 		assertThat(response.status, is(204));
@@ -404,7 +404,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(keystr.length(), greaterThan(0));
 		key = client.key(keystr);
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = key.details();
 		assertThat(response.status, is(200));
@@ -424,7 +424,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(keystr.length(), greaterThan(0));
 		key = client.key(keystr);
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = key.delete();
 		assertThat(response.status, is(204));
@@ -449,13 +449,13 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(deviceId.length(), greaterThan(0));
 		device = client.device(deviceId);
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		stream = device.stream("testdevicestream");
 		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		StreamValues values = new StreamValues();
 		values.values = new StreamValue[]
@@ -480,7 +480,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(id.length(), greaterThan(0));
 		chart = client.chart(id);
 
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 
 		response = chart.details();
 		assertThat(response.status, is(200));
