@@ -259,6 +259,9 @@ public class M2XClientTests extends M2XTestBase
 			put("value", 20);
 		}}));
 		assertThat(response.status, is(202));
+
+		Thread.sleep(1000);
+
 		response = stream.sampling("type=sum&interval=100");
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), is(1));
