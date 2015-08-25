@@ -17,7 +17,6 @@ public class M2XClientTests extends M2XTestBase
 	private M2XDistribution distribution = null;
 	private M2XDevice device = null;
 	private M2XStream stream = null;
-	private M2XTrigger trigger = null;
 	private M2XKey key = null;
 	private M2XChart chart = null;
 
@@ -61,11 +60,6 @@ public class M2XClientTests extends M2XTestBase
 		{
 			delete(this.key);
 			this.key = null;
-		}
-		if (this.chart != null)
-		{
-			delete(this.trigger);
-			this.trigger = null;
 		}
 		if (this.stream != null)
 		{
@@ -293,62 +287,9 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
 
-		// trigger
-
-		response = device.createTrigger(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("stream", stream.streamName);
-			put("name", "testdevicetrigger");
-			put("condition", "=");
-			put("value", 0);
-			put("callback_url", M2XClient.API_ENDPOINT);
-		}}));
-		assertThat(response.status, is(201));
-		String triggerId = response.json().getString("id");
-		assertThat(triggerId, is(notNullValue()));
-		assertThat(triggerId.length(), greaterThan(0));
-		trigger = device.trigger(triggerId);
-
-		Thread.sleep(1000);
-
-		response = device.triggers();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getJSONArray("triggers").length(), greaterThan(0));
-
-		response = trigger.details();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getString("status"), is("enabled"));
-
-		response = trigger.update(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("stream", stream.streamName);
-			put("name", "testdevicetrigger1");
-			put("condition", "=");
-			put("value", -1);
-			put("callback_url", M2XClient.API_ENDPOINT);
-		}}));
-		assertThat(response.status, is(204));
-
-		response = trigger.test(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("device_id", device.deviceId);
-			put("stream", stream.streamName);
-			put("trigger_name", "test");
-			put("trigger_description", "test");
-			put("condition", "=");
-			put("threshold", 3.5);
-			put("value", 0);
-			put("timestamp", M2XClient.dateTimeToString(now));
-		}}));
-		assertThat(response.status, is(204));
-
 		response = device.log();
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("requests").length(), greaterThan(0));
-
-		response = trigger.delete();
-		assertThat(response.status, is(204));
-		trigger = null;
 
 		response = stream.delete();
 		assertThat(response.status, is(204));
@@ -426,35 +367,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getString("name"), is(stream.streamName));
 
-		// trigger
-
-		response = distribution.createTrigger(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("stream", stream.streamName);
-			put("name", "testdistributiontrigger");
-			put("condition", "=");
-			put("value", 0);
-			put("callback_url", M2XClient.API_ENDPOINT);
-		}}));
-		assertThat(response.status, is(201));
-		String triggerId = response.json().getString("id");
-		assertThat(triggerId, is(notNullValue()));
-		assertThat(triggerId.length(), greaterThan(0));
-		trigger = distribution.trigger(triggerId);
-
 		Thread.sleep(1000);
-
-		response = distribution.triggers();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getJSONArray("triggers").length(), greaterThan(0));
-
-		response = trigger.details();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getString("status"), is("enabled"));
-
-		response = trigger.delete();
-		assertThat(response.status, is(204));
-		trigger = null;
 
 		response = stream.delete();
 		assertThat(response.status, is(204));
