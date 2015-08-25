@@ -402,9 +402,9 @@ public final class M2XClient
 	 */
 	public static String dateTimeToString(Date dateTime)
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
-		return df.format(dateTime);
+		return df.format(dateTime).concat("Z");
 	}
 }
 
