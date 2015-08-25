@@ -40,7 +40,7 @@ public final class M2XClient
 
 	static
 	{
-		String version = "3.0.0";
+		String version = "4.0.0";
 		String langVersion = System.getProperty("java.version");
 		String osVersion = System.getProperty("os.arch") + "-" + System.getProperty("os.name") + System.getProperty("os.version");
 		USER_AGENT = String.format("M2X-Java/%s java/%s (%s)", version, langVersion, osVersion);
@@ -402,9 +402,9 @@ public final class M2XClient
 	 */
 	public static String dateTimeToString(Date dateTime)
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		df.setTimeZone(TimeZone.getTimeZone("UTC"));
-		return df.format(dateTime);
+		return df.format(dateTime).concat("Z");
 	}
 }
 

@@ -113,47 +113,6 @@ public final class M2XDevice extends M2XClass
 	}
 
 	/**
-	 * Retrieve list of triggers associated with the specified device.
-	 *
-	 * https://m2x.att.com/developer/documentation/v2/device#List-Triggers
-	 */
-	/**
-	 * Retrieve list of triggers associated with the specified device.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Triggers">https://m2x.att.com/developer/documentation/v2/device#List-Triggers</a>
-	 */
-	public M2XResponse triggers() throws IOException
-	{
-		return makeGet(M2XTrigger.URL_PATH, null);
-	}
-
-	/**
-	 * Create a new trigger associated with the specified device.
-	 *
-	 * @param jsonContent parameters for the trigger to be created as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Trigger">https://m2x.att.com/developer/documentation/v2/device#Create-Trigger</a>
-	 */
-	public M2XResponse createTrigger(String jsonContent) throws IOException
-	{
-		return makePost(M2XTrigger.URL_PATH, jsonContent);
-	}
-
-	/**
-	 * Get a wrapper to access a trigger associated with the specified Device.
-	 *
-	 * @param triggerId the trigger id
-	 * @return the trigger for this device with the given triggerId
-	 */
-	public M2XTrigger trigger(String triggerId)
-	{
-		return new M2XTrigger(triggerId, this, null);
-	}
-
-	/**
 	 * Retrieve list of HTTP requests received lately by the specified device (up to 100 entries).
 	 *
 	 * @return the API response
