@@ -25,7 +25,7 @@ To include the M2X Java Client Library in your project, add the following to you
         <dependency>
             <groupId>com.att.m2x</groupId>
             <artifactId>java</artifactId>
-            <version>3.0.0</version>
+            <version>4.0.0</version>
         </dependency>
     </dependencies>
 ```
