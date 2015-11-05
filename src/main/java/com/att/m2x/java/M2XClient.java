@@ -207,49 +207,6 @@ public final class M2XClient
 		return new M2XKey(this, key);
 	}
 
-	// Charts API
-
-	/**
-	 * Retrieve the list of charts that belong to the authenticated user.
-	 *
-	 * @param query query parameters (optional)
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#List-Charts">https://m2x.att.com/developer/documentation/v2/charts#List-Charts</a>
-	 */
-	public M2XResponse charts(String query) throws IOException
-	{
-		return makeRequest("GET", M2XChart.URL_PATH, query, null);
-	}
-
-	/**
-	 * Create a new chart associated with the authenticated account.
-	 *
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Create-Chart">https://m2x.att.com/developer/documentation/v2/charts#Create-Chart</a>
-	 */
-	/**
-	 *
-	 * @param jsonContent parameters for the chart to be created as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/charts#Create-Chart">https://m2x.att.com/developer/documentation/v2/charts#Create-Chart</a>
-	 */
-	public M2XResponse createChart(String jsonContent) throws IOException
-	{
-		return makeRequest("POST", M2XChart.URL_PATH, null, jsonContent);
-	}
-
-	/**
-	 * Get a wrapper to access an existing chart.
-	 *
-	 * @param chartId the chart id
-	 * @return the M2X chart associated with the given chartId
-	 */
-	public M2XChart chart(String chartId)
-	{
-		return new M2XChart(this, chartId);
-	}
-
 	// Common
 
 	/**

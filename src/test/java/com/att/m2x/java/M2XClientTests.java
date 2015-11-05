@@ -18,7 +18,6 @@ public class M2XClientTests extends M2XTestBase
 	private M2XDevice device = null;
 	private M2XStream stream = null;
 	private M2XKey key = null;
-	private M2XChart chart = null;
 
 	public class TestClass
 	{
@@ -51,11 +50,6 @@ public class M2XClientTests extends M2XTestBase
 	@After
 	public void testCleanup()
 	{
-		if (this.chart != null)
-		{
-			delete(this.chart);
-			this.chart = null;
-		}
 		if (this.key != null)
 		{
 			delete(this.key);
@@ -429,85 +423,5 @@ public class M2XClientTests extends M2XTestBase
 		response = key.delete();
 		assertThat(response.status, is(204));
 		key = null;
-	}
-
-	@Test
-	public void chartApiTest() throws IOException, InterruptedException
-	{
-		M2XResponse response;
-
-		// device & stream
-
-		response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("name", "TestDevice-" + testId);
-			put("visibility", "private");
-		}}));
-		assertThat(response.status, is(201));
-		final String deviceId = response.json().getString("id");
-		assertThat(deviceId, is(notNullValue()));
-		assertThat(deviceId.length(), greaterThan(0));
-		device = client.device(deviceId);
-
-		Thread.sleep(1500);
-
-		stream = device.stream("testdevicestream");
-		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
-		assertThat(response.status, is(201));
-
-		Thread.sleep(1500);
-
-		StreamValues values = new StreamValues();
-		values.values = new StreamValue[]
-		{
-			new StreamValue() {{ timestamp = new Date(now.getTime() - 120000); value = 10; }},
-			new StreamValue() {{ timestamp = new Date(now.getTime() - 60000); value = 30; }},
-			new StreamValue() {{ timestamp = now; value = 20; }},
-		};
-		response = stream.postValues(M2XClient.jsonSerialize(values));
-		assertThat(response.status, is(202));
-
-		// charts
-
-		response = client.createChart(M2XClient.jsonSerialize(new HashMap<String, Object>()
-		{{
-			put("name", "testchart" + testId);
-			put("series", new ChartSeries [] { new ChartSeries() {{ device = deviceId; stream = "testdevicestream"; }} });
-		}}));
-		assertThat(response.status, is(201));
-		String id = response.json().getString("id");
-		assertThat(id, is(notNullValue()));
-		assertThat(id.length(), greaterThan(0));
-		chart = client.chart(id);
-
-		Thread.sleep(1500);
-
-		response = chart.details();
-		assertThat(response.status, is(200));
-		assertThat(response.json().getString("name"), is(notNullValue()));
-
-		response = client.charts(null);
-		assertThat(response.status, is(200));
-		assertThat(response.json().getJSONArray("charts").length(), greaterThan(0));
-
-		String url = chart.renderUrl("png", M2XClient.mapToQuery(new HashMap<String, String>()
-		{{
-			put("width", "100");
-			put("height", "50");
-		}}));
-		assertThat(url, is(notNullValue()));
-		assertThat(url.length(), greaterThan(0));
-
-		response = chart.delete();
-		assertThat(response.status, is(204));
-		chart = null;
-
-		response = stream.delete();
-		assertThat(response.status, is(204));
-		stream = null;
-
-		response = device.delete();
-		assertThat(response.status, is(204));
-		device = null;
 	}
 }
