@@ -62,17 +62,12 @@ public final class M2XClient
 	// Device API
 
 	/**
-	 * Search the catalog of public Devices.
-	 *
-	 * This allows unauthenticated users to search Devices from other users
-	 * that have been marked as public, allowing them to read public Device
-	 * metadata, locations, streams list, and view each Devices' stream metadata
-	 * and its values.
+	 * List the catalog of public Devices.
 	 *
 	 * @param query query parameters (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog">https://m2x.att.com/developer/documentation/v2/device#List-Search-Public-Devices-Catalog</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Public-Devices-Catalog">https://m2x.att.com/developer/documentation/v2/device#List-Public-Devices-Catalog</a>
 	 */
 	public M2XResponse deviceCatalog(String query) throws IOException
 	{
@@ -80,17 +75,46 @@ public final class M2XClient
 	}
 
 	/**
-	 * Retrieve the list of devices accessible by the authenticated API key that
-	 * meet the search criteria.
+	 * Search the catalog of public Devices.
+	 *
+	 * @param query query parameters (optional)
+	 * @jsonContent streams, metadata, and location search parameters as JSON formatted string (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Search-Public-Devices-Catalog">https://m2x.att.com/developer/documentation/v2/device#Search-Public-Devices-Catalog</a>
+	 */
+	public M2XResponse deviceCatalogSearch(String query, String jsonContent) throws IOException
+	{
+		return makeRequest(jsonContent == null || jsonContent.length() == 0 ? "GET" : "POST",
+			M2XDevice.URL_PATH + "/catalog/search", query, jsonContent);
+	}
+
+	/**
+	 * Retrieve the list of devices accessible by the authenticated API key.
 	 *
 	 * @param query query parameters (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices">https://m2x.att.com/developer/documentation/v2/device#List-Search-Devices</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Devices">https://m2x.att.com/developer/documentation/v2/device#List-Devices</a>
 	 */
 	public M2XResponse devices(String query) throws IOException
 	{
 		return makeRequest("GET", M2XDevice.URL_PATH, query, null);
+	}
+
+	/**
+	 * Retrieve the list of devices accessible by the authenticated API key that meet the search criteria.
+	 *
+	 * @param query query parameters (optional)
+	 * @jsonContent streams, metadata, and location search parameters as JSON formatted string (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Search-Devices">https://m2x.att.com/developer/documentation/v2/device#Search-Devices</a>
+	 */
+	public M2XResponse searchDevices(String query, String jsonContent) throws IOException
+	{
+		return makeRequest(jsonContent == null || jsonContent.length() == 0 ? "GET" : "POST",
+			M2XDevice.URL_PATH + "/search", query, jsonContent);
 	}
 
 	/**
@@ -127,8 +151,16 @@ public final class M2XClient
 	 */
 	public M2XDevice device(String deviceId)
 	{
-		return new M2XDevice(this, deviceId);
+		return new M2XDevice(this, deviceId, null);
 	}
+
+	/**
+	 * Get a wrapper to access an existing Device.
+	 *
+	 * @param serial the serial of the device
+	 * @return the M2X device associated with the given serial
+	 */
+	public M2XDevice deviceBySerial(String serial) { return new M2XDevice(this, null, serial); }
 
 	// Distribution API
 
@@ -207,6 +239,92 @@ public final class M2XClient
 		return new M2XKey(this, key);
 	}
 
+	// Collections API
+
+	/**
+	 * Retrieve a list of collections accessible by the authenticated user.
+	 *
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/collections#List-collections">https://m2x.att.com/developer/documentation/v2/collections#List-collections</a>
+	 */
+	public M2XResponse collections(String query) throws IOException
+	{
+		return makeRequest("GET", M2XCollection.URL_PATH, query, null);
+	}
+
+	/**
+	 * Create a new collection.
+	 *
+	 * @param jsonContent parameters for the collection to be created as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/collections#Create-Collection">https://m2x.att.com/developer/documentation/v2/collections#Create-Collection</a>
+	 */
+	public M2XResponse createCollection(String jsonContent) throws IOException
+	{
+		return makeRequest("POST", M2XCollection.URL_PATH, null, jsonContent);
+	}
+
+	/**
+	 * Get a wrapper to access an existing Collection.
+	 *
+	 * @param collectionId the id of the collection
+	 * @return the M2X collection associated with the given collectionId
+	 */
+	public M2XCollection collection(String collectionId)
+	{
+		return new M2XCollection(this, collectionId);
+	}
+
+	// Jobs API
+
+	/**
+	 * Retrieve the list of the most recent jobs that belong to the authenticated user.
+	 *
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/jobs#List-Jobs">https://m2x.att.com/developer/documentation/v2/jobs#List-Jobs</a>
+	 */
+	public M2XResponse jobs(String query) throws IOException
+	{
+		return makeRequest("GET", "/jobs", query, null);
+	}
+
+	/**
+	 * Retrieve the job details.
+	 *
+	 * @param jobId the id of the job
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Details">https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Details</a>
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Results">https://m2x.att.com/developer/documentation/v2/jobs#View-Job-Results</a>
+	 */
+	public M2XResponse jobDetails(String jobId) throws IOException
+	{
+		return makeRequest("GET", "/jobs/" + jobId, null, null);
+	}
+
+	// Time API
+
+	/**
+	 * Returns M2X servers' time.
+	 *
+	 * @param format the desired time format (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/time">https://m2x.att.com/developer/documentation/v2/time</a>
+	 */
+	public M2XResponse time(String format) throws IOException
+	{
+		String path = "/time";
+		if (format != null && format.length() > 0)
+			path += "/" + format;
+		return makeRequest("GET", path, null, null);
+	}
+
 	// Common
 
 	/**
@@ -228,7 +346,7 @@ public final class M2XClient
 		if (this.apiKey != null)
 			conn.setRequestProperty("X-M2X-KEY", this.apiKey);
 		conn.setRequestProperty("User-Agent", USER_AGENT);
-		conn.setRequestProperty("Accept", "application/json");
+		conn.setRequestProperty("Accept", "application/json,text/plain,text/csv");
 		conn.setConnectTimeout(this.connectionTimeout);
 		conn.setReadTimeout(this.readTimeout);
 

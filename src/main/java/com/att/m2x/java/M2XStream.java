@@ -35,21 +35,6 @@ public final class M2XStream extends M2XClass
 	}
 
 	/**
-	 * Update a data stream associated with the Device or specified distribution
-	 * (if a stream with this name does not exist it gets created).
-	 *
-	 * @param jsonContent parameters for the stream to be created/updated as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream</a>
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream</a>
-	 */
-	public M2XResponse createOrUpdate(String jsonContent) throws IOException
-	{
-		return makePut(null, jsonContent);
-	}
-
-	/**
 	 * Update the current value of the stream.
 	 *
 	 * @param jsonContent parameters for the stream to be updated as JSON formatted string
@@ -63,30 +48,21 @@ public final class M2XStream extends M2XClass
 	}
 
 	/**
-	 * Get details of a specific data Stream associated with an existing device or distribution.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#View-Data-Stream</a>
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#View-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#View-Data-Stream</a>
-	 */
-	public M2XResponse details() throws IOException
-	{
-		return makeGet(null, null);
-	}
-
-	/**
 	 * List values from the stream, sorted in reverse chronological order
 	 * (most recent values first).
 	 *
 	 * @param query query parameters (optional)
+	 * @param format the desired response format (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values">https://m2x.att.com/developer/documentation/v2/device#List-Data-Stream-Values</a>
 	 */
-	public M2XResponse values(String query) throws IOException
+	public M2XResponse values(String query, String format) throws IOException
 	{
-		return makeGet("/values", query);
+		String path = "/values";
+		if (format != null && format.length() > 0)
+			path += "." + format;
+		return makeGet(path, query);
 	}
 
 	/**
@@ -96,13 +72,17 @@ public final class M2XStream extends M2XClass
 	 * This method only works for numeric streams
 	 *
 	 * @param query query parameters
+	 * @param format the desired response format (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling">https://m2x.att.com/developer/documentation/v2/device#Data-Stream-Sampling</a>
 	 */
-	public M2XResponse sampling(String query) throws IOException
+	public M2XResponse sampling(String query, String format) throws IOException
 	{
-		return makeGet("/sampling", query);
+		String path = "/sampling";
+		if (format != null && format.length() > 0)
+			path += "." + format;
+		return makeGet(path, query);
 	}
 
 	/**
@@ -144,18 +124,5 @@ public final class M2XStream extends M2XClass
 	public M2XResponse deleteValues(String query) throws IOException
 	{
 		return makeDelete("/values", query);
-	}
-
-	/**
-	 * Delete an existing data stream associated with a specific device or distribution.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#Delete-Data-Stream</a>
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Delete-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#Delete-Data-Stream</a>
-	 */
-	public M2XResponse delete() throws IOException
-	{
-		return makeDelete(null, null);
 	}
 }

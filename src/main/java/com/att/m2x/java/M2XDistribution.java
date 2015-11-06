@@ -7,7 +7,7 @@ import java.io.IOException;
  *
  * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution">M2X Distribution API Documentation</a>
  */
-public final class M2XDistribution extends M2XClass
+public final class M2XDistribution extends M2XClassWithMetadata
 {
 	public static final String URL_PATH = "/distributions";
 
@@ -24,31 +24,6 @@ public final class M2XDistribution extends M2XClass
 	String buildPath(String path)
 	{
 		return concat(M2XDistribution.URL_PATH, "/", this.distributionId, path);
-	}
-
-	/**
-	 * Retrieve information about an existing device distribution.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details">https://m2x.att.com/developer/documentation/v2/distribution#View-Distribution-Details</a>
-	 */
-	public M2XResponse details() throws IOException
-	{
-		return makeGet(null, null);
-	}
-
-	/**
-	 * Update an existing device distribution's information.
-	 *
-	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Details">https://m2x.att.com/developer/documentation/v2/distribution#Update-Distribution-Details</a>
-	 */
-	public M2XResponse update(String jsonContent) throws IOException
-	{
-		return makePut(null, jsonContent);
 	}
 
 	/**
@@ -74,18 +49,6 @@ public final class M2XDistribution extends M2XClass
 	public M2XResponse addDevice(String jsonContent) throws IOException
 	{
 		return makePost(M2XDevice.URL_PATH, jsonContent);
-	}
-
-	/**
-	 * Delete an existing device distribution.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Delete-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#Delete-Distribution</a>
-	 */
-	public M2XResponse delete() throws IOException
-	{
-		return makeDelete(null, null);
 	}
 
 	/**

@@ -7,48 +7,27 @@ import java.io.IOException;
  *
  * @see <a href="https://m2x.att.com/developer/documentation/v2/device">M2X Device API Documentation</a>
  */
-public final class M2XDevice extends M2XClass
+public final class M2XDevice extends M2XClassWithMetadata
 {
 	public static final String URL_PATH = "/devices";
 
 	public final String deviceId;
+	public final String serial;
 
-	M2XDevice(M2XClient client, String deviceId)
+	M2XDevice(M2XClient client, String deviceId, String serial)
 	{
 		super(client);
-		assert deviceId != null && deviceId.length() > 0;
+		assert (deviceId != null && deviceId.length() > 0) || (serial != null && serial.length() > 0);
 
 		this.deviceId = deviceId;
+		this.serial = serial;
 	}
 
 	String buildPath(String path)
 	{
-		return concat(M2XDevice.URL_PATH, "/", this.deviceId, path);
-	}
-
-	/**
-	 * Update an existing Device's information.
-	 *
-	 * @param jsonContent parameters for the device to be updated as JSON formatted string
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details">https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details</a>
-	 */
-	public M2XResponse update(String jsonContent) throws IOException
-	{
-		return makePut(null, jsonContent);
-	}
-
-	/**
-	 * Get details of an existing Device.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Device-Details">https://m2x.att.com/developer/documentation/v2/device#View-Device-Details</a>
-	 */
-	public M2XResponse details() throws IOException
-	{
-		return makeGet(null, null);
+		return (deviceId != null && deviceId.length() > 0)
+			? concat(M2XDevice.URL_PATH, "/", this.deviceId, path)
+			: concat(M2XDevice.URL_PATH, "/serial/", this.serial, path);
 	}
 
 	/**
@@ -122,17 +101,5 @@ public final class M2XDevice extends M2XClass
 	public M2XResponse log() throws IOException
 	{
 		return makeGet("/log", null);
-	}
-
-	/**
-	 * Delete an existing device.
-	 *
-	 * @return the API response
-	 * @throws IOException if an input or output exception occurred
-	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Device">https://m2x.att.com/developer/documentation/v2/device#Delete-Device</a>
-	 */
-	public M2XResponse delete() throws IOException
-	{
-		return makeDelete(null, null);
 	}
 }

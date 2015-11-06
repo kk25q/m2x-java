@@ -218,7 +218,7 @@ public class M2XClientTests extends M2XTestBase
 		// stream
 
 		stream = device.stream("testdevicestream");
-		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
+		response = stream.update("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
 		response = device.streams();
@@ -238,7 +238,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.json().getString("name"), is(stream.streamName));
 		assertThat(response.json().getInt("value"), is(10));
 
-		response = stream.values("start=" + M2XClient.dateTimeToString(now));
+		response = stream.values("start=" + M2XClient.dateTimeToString(now), null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), is(1));
 
@@ -250,7 +250,7 @@ public class M2XClientTests extends M2XTestBase
 
 		Thread.sleep(1500);
 
-		response = stream.sampling("type=sum&interval=100");
+		response = stream.sampling("type=sum&interval=100", null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), is(1));
 		assertThat(response.json().getJSONArray("values").getJSONObject(0).getInt("value"), is(30));
@@ -277,7 +277,7 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(204));
 
-		response = stream.values(null);
+		response = stream.values(null, null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
 
@@ -327,7 +327,7 @@ public class M2XClientTests extends M2XTestBase
 		// stream
 
 		stream = distribution.stream("testdevicestream");
-		response = stream.createOrUpdate("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
+		response = stream.update("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
 		response = distribution.streams();
