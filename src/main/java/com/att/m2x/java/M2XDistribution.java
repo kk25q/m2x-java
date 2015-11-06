@@ -41,7 +41,7 @@ public final class M2XDistribution extends M2XClassWithMetadata
 	/**
 	 * Add a new device to an existing distribution
 	 *
-	 * @param jsonContent parameters for the distribution to be updated as JSON formatted string
+	 * @param jsonContent parameters for the request as JSON formatted string
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution">https://m2x.att.com/developer/documentation/v2/distribution#Add-Device-to-an-existing-Distribution</a>

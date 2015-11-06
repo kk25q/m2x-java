@@ -58,13 +58,14 @@ public final class M2XDevice extends M2XClassWithMetadata
 	/**
 	 * Retrieve list of data streams associated with the device.
 	 *
+	 * @param query query parameters (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams">https://m2x.att.com/developer/documentation/v2/device#List-Data-Streams</a>
 	 */
-	public M2XResponse streams() throws IOException
+	public M2XResponse streams(String query) throws IOException
 	{
-		return makeGet(M2XStream.URL_PATH, null);
+		return makeGet(M2XStream.URL_PATH, query);
 	}
 
 	/**
@@ -79,9 +80,71 @@ public final class M2XDevice extends M2XClassWithMetadata
 	}
 
 	/**
+	 * List values from all data streams associated with a specific device, sorted in reverse chronological order
+	 * (most recent values first).
+	 *
+	 * @param query query parameters (optional)
+	 * @param format the desired response format (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#List-Values-from-all-Data-Streams-of-a-Device">https://m2x.att.com/developer/documentation/v2/device#List-Values-from-all-Data-Streams-of-a-Device</a>
+	 */
+	public M2XResponse values(String query, String format) throws IOException
+	{
+		String path = "/values";
+		if (format != null && format.length() > 0)
+			path += "." + format;
+		return makeGet(path, query);
+	}
+
+	/**
+	 * Search and list values from all data streams associated with a specific device, sorted in reverse chronological order.
+	 *
+	 * @param jsonContent search parameters as JSON formatted string
+	 * @param format the desired response format (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Search-Values-from-all-Data-Streams-of-a-Device">https://m2x.att.com/developer/documentation/v2/device#Search-Values-from-all-Data-Streams-of-a-Device</a>
+	 */
+	public M2XResponse searchValues(String jsonContent, String format) throws IOException
+	{
+		String path = "/values/search";
+		if (format != null && format.length() > 0)
+			path += "." + format;
+		return makePost(path, jsonContent);
+	}
+
+	/**
+	 * Export all values from all or selected data streams associated with a specific device, sorted in reverse chronological order
+	 * (most recent values first).
+	 *
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Export-Values-from-all-Data-Streams-of-a-Device">https://m2x.att.com/developer/documentation/v2/device#Export-Values-from-all-Data-Streams-of-a-Device</a>
+	 */
+	public M2XResponse exportValues(String query) throws IOException
+	{
+		return makeGet("/values/export.csv", query);
+	}
+
+	/**
+	 * Posts single values to multiple streams at once.
+	 *
+	 * @param jsonContent parameters for the request as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Post-Device-Update--Single-Values-to-Multiple-Streams-">https://m2x.att.com/developer/documentation/v2/device#Post-Device-Update--Single-Values-to-Multiple-Streams-</a>
+	 */
+	public M2XResponse postUpdate(String jsonContent) throws IOException
+	{
+		return makePost("/update", jsonContent);
+	}
+
+	/**
 	 * Post values to multiple streams at once.
 	 *
-	 * @param jsonContent parameters for the device to be updated as JSON formatted string
+	 * @param jsonContent parameters for the request as JSON formatted string
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-">https://m2x.att.com/developer/documentation/v2/device#Post-Device-Updates--Multiple-Values-to-Multiple-Streams-</a>
@@ -94,12 +157,13 @@ public final class M2XDevice extends M2XClassWithMetadata
 	/**
 	 * Retrieve list of HTTP requests received lately by the specified device (up to 100 entries).
 	 *
+	 * @param query query parameters (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#View-Request-Log">https://m2x.att.com/developer/documentation/v2/device#View-Request-Log</a>
 	 */
-	public M2XResponse log() throws IOException
+	public M2XResponse log(String query) throws IOException
 	{
-		return makeGet("/log", null);
+		return makeGet("/log", query);
 	}
 }

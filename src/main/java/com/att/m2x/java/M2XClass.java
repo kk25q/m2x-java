@@ -60,7 +60,7 @@ public abstract class M2XClass
 	/**
 	 * Update an existing entity.
 	 *
-	 * @param jsonContent parameters for the device to be updated as JSON formatted string
+	 * @param jsonContent parameters for the entity to be updated as JSON formatted string
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details">https://m2x.att.com/developer/documentation/v2/device#Update-Device-Details</a>

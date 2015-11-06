@@ -221,7 +221,7 @@ public class M2XClientTests extends M2XTestBase
 		response = stream.update("{\"type\":\"numeric\",\"unit\":{\"label\":\"points\",\"symbol\":\"pt\"}}");
 		assertThat(response.status, is(201));
 
-		response = device.streams();
+		response = device.streams(null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("streams").length(), greaterThan(0));
 
@@ -281,7 +281,7 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
 
-		response = device.log();
+		response = device.log(null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("requests").length(), greaterThan(0));
 

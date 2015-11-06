@@ -23,6 +23,7 @@ public abstract class M2XClassWithMetadata extends M2XClass
 	/**
 	 * Update the custom metadata of the specified entity.
 	 *
+	 * @param jsonContent parameters for the request as JSON formatted string
 	 * @return the API response
 	 * @throws java.io.IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata">https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata</a>
@@ -34,6 +35,7 @@ public abstract class M2XClassWithMetadata extends M2XClass
 	/**
 	 * Get the value of a single custom metadata field from an existing entity.
 	 *
+	 * @param field the name of the field in the metadata
 	 * @return the API response
 	 * @throws java.io.IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata-Field">https://m2x.att.com/developer/documentation/v2/device#Read-Device-Metadata-Field</a>
@@ -45,6 +47,8 @@ public abstract class M2XClassWithMetadata extends M2XClass
 	/**
 	 * Update the custom metadata of the specified entity.
 	 *
+	 * @param field the name of the field in the metadata
+	 * @param jsonContent parameters for the request as JSON formatted string
 	 * @return the API response
 	 * @throws java.io.IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata-Field">https://m2x.att.com/developer/documentation/v2/device#Update-Device-Metadata-Field</a>

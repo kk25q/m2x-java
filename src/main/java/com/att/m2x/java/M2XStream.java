@@ -104,7 +104,7 @@ public final class M2XStream extends M2XClass
 	/**
 	 * Post multiple values to the stream
 	 *
-	 * @param jsonContent parameters for the stream to be updated as JSON formatted string
+	 * @param jsonContent parameters for the request as JSON formatted string
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values">https://m2x.att.com/developer/documentation/v2/device#Post-Data-Stream-Values</a>

@@ -333,7 +333,7 @@ public final class M2XClient
 	 * @param method the HTTP method (GET/POST/PUT/DELETE)
 	 * @param path the API URL path (optional)
 	 * @param query the API URL query parameters (optional)
-	 * @param jsonContent the POST/PUT/DELETE content (optional)
+	 * @param jsonContent the POST/PUT content (optional)
 	 * @return the API response
 	 * @throws IOException if an input or output exception occurred
 	 */
