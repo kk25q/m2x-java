@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class M2XClientTests extends M2XTestBase
@@ -18,6 +21,7 @@ public class M2XClientTests extends M2XTestBase
 	private M2XDevice device = null;
 	private M2XStream stream = null;
 	private M2XKey key = null;
+	private M2XCollection collection = null;
 
 	public class TestClass
 	{
@@ -39,17 +43,45 @@ public class M2XClientTests extends M2XTestBase
 		public String getTimestamp() { return M2XClient.dateTimeToString(this.timestamp); }
 		public int getValue() { return this.value; }
 	}
-	public class ChartSeries
+
+	public class DeviceCatalogSearchParams
 	{
-		public String device;
-		public String stream;
-		public String getDevice() { return this.device; }
-		public String getStream() { return this.stream; }
+		public DeviceLocationFilter location;
+		public DeviceLocationFilter getLocation() { return this.location; }
+	}
+	public class DeviceLocationFilter
+	{
+		public WithinCircleFilter within_circle;
+		public WithinCircleFilter getWithin_circle() { return this.within_circle; }
+	}
+	public class WithinCircleFilter
+	{
+		public LocationPointParams center;
+		public RadiusParams radius;
+		public LocationPointParams getCenter() { return this.center; }
+		public RadiusParams getRadius() { return this.radius; }
+	}
+	public class LocationPointParams
+	{
+		public double latitude;
+		public double longitude;
+		public double getLatitude() { return this.latitude; }
+		public double getLongitude() { return this.longitude; }
+	}
+	public class RadiusParams
+	{
+		public int km;
+		public int getKm() { return this.km; }
 	}
 
 	@After
 	public void testCleanup()
 	{
+		if (this.collection != null)
+		{
+			delete(this.collection);
+			this.collection = null;
+		}
 		if (this.key != null)
 		{
 			delete(this.key);
@@ -158,9 +190,43 @@ public class M2XClientTests extends M2XTestBase
 		{{
 			put("page", "1");
 			put("limit", "10");
+			put("sort", "name");
+			put("dir", "asc");
 		}}));
 		assertThat(response.status, is(200));
-		assertThat(response.json().getJSONArray("devices").length(), greaterThan(0));
+		JSONObject devices = response.json();
+		assertThat(devices, is(notNullValue()));
+		JSONArray deviceList = devices.getJSONArray("devices");
+		assertThat(deviceList, is(notNullValue()));
+		assertThat(deviceList.length(), greaterThan(0));
+
+		JSONObject deviceLocation = null;
+		for (int i=0; i < deviceList.length(); i++)
+		{
+			deviceLocation = deviceList.getJSONObject(i).getJSONObject("location");
+			if (deviceLocation != null && deviceLocation.has("latitude") && deviceLocation.has("longitude"))
+				break;
+		}
+		double latitude = deviceLocation.getDouble("latitude");
+		double longitude = deviceLocation.getDouble("longitude");
+		assertThat(deviceLocation, is(notNullValue()));
+		response = client.deviceCatalogSearch(null, M2XClient.jsonSerialize(new DeviceCatalogSearchParams(){{
+			location = new DeviceLocationFilter() {{
+				within_circle = new WithinCircleFilter() {{
+					center = new LocationPointParams() {{
+						latitude = latitude;
+						longitude = longitude;
+					}};
+					radius = new RadiusParams() {{ km = 10; }};
+				}};
+			}};
+		}}));
+		assertThat(response.status, is(200));
+		devices = response.json();
+		assertThat(devices, is(notNullValue()));
+		deviceList = devices.getJSONArray("devices");
+		assertThat(deviceList, is(notNullValue()));
+		//TODO: assertThat(deviceList.length(), greaterThan(0));
 
 		response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
 		{{
@@ -248,9 +314,9 @@ public class M2XClientTests extends M2XTestBase
 		}}));
 		assertThat(response.status, is(202));
 
-		Thread.sleep(1500);
+		Thread.sleep(2000);
 
-		response = stream.sampling("type=sum&interval=100", null);
+		response = stream.sampling("type=sum&interval=200", null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), is(1));
 		assertThat(response.json().getJSONArray("values").getJSONObject(0).getInt("value"), is(30));
@@ -278,6 +344,27 @@ public class M2XClientTests extends M2XTestBase
 		assertThat(response.status, is(204));
 
 		response = stream.values(null, null);
+		assertThat(response.status, is(200));
+		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
+
+		response = device.postUpdate("{\"timestamp\":\"" +
+			M2XClient.dateTimeToString(new Date(now.getTime())) + "\",\"values\":{\"testdevicestream\":3}}");
+		assertThat(response.status, is(202));
+
+		response = device.postUpdates("{\"values\":{\"testdevicestream\":[{\"timestamp\":\"" +
+			M2XClient.dateTimeToString(from) + "\",\"value\":5},{\"timestamp\":\"" +
+			M2XClient.dateTimeToString(end) + "\",\"value\":4}]}}");
+		assertThat(response.status, is(202));
+
+		Thread.sleep(1000);
+
+		response = device.values(null, null);
+		assertThat(response.status, is(200));
+		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
+
+		response = device.searchValues("{\"start\":\"" + M2XClient.dateTimeToString(from) +
+			"\",\"end\":\"" + M2XClient.dateTimeToString(end) +
+			"\",\"streams\":[\"testdevicestream\"],\"conditions\":{\"testdevicestream\":{\"gte\":4}}}", null);
 		assertThat(response.status, is(200));
 		assertThat(response.json().getJSONArray("values").length(), greaterThan(0));
 
@@ -423,5 +510,129 @@ public class M2XClientTests extends M2XTestBase
 		response = key.delete();
 		assertThat(response.status, is(204));
 		key = null;
+	}
+
+	@Test
+	public void collectionsApiTest() throws IOException, InterruptedException
+	{
+		M2XResponse response;
+
+		final String collectionName = "testCollection-" + testId;
+		response = client.createCollection(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("name", collectionName);
+			put("description", "unitTest");
+		}}));
+		assertThat(response.status, is(201));
+		String collectionId = response.json().getString("id");
+		assertThat(collectionId, is(notNullValue()));
+		assertThat(collectionId.length(), greaterThan(0));
+		collection = client.collection(collectionId);
+
+		response = collection.details();
+		assertThat(response.status, is(200));
+		JSONObject json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("name"), is(collectionName));
+		assertThat(json.getString("description"), is("unitTest"));
+
+		response = client.collections(null);
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getJSONArray("collections").length(), greaterThan(0));
+
+		response = collection.update(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("name", collectionName);
+			put("description", "test");
+		}}));
+		assertThat(response.status, is(204));
+		response = collection.details();
+		assertThat(response.status, is(200));
+		assertThat(response.json().getString("description"), is("test"));
+
+		// metadata
+
+		response = collection.updateMetadata(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("field1", "value1");
+			put("field2", "value2");
+		}}));
+		assertThat(response.status, is(204));
+
+		response = collection.metadata();
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("field1"), is("value1"));
+
+		response = collection.updateMetadataField("field1", M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+				put("value", "value3");
+		}}));
+		assertThat(response.status, is(204));
+
+		response = collection.metadataField("field2");
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("value"), is("value2"));
+
+		response = collection.metadataField("field1");
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("value"), is("value3"));
+	}
+
+	@Test
+	public void jobsApiTest() throws IOException, InterruptedException
+	{
+		M2XResponse response;
+
+		response = client.jobs(null);
+		assertThat(response.status, is(200));
+		JSONObject json = response.json();
+		assertThat(json, is(notNullValue()));
+		JSONArray jobs = json.getJSONArray("jobs");
+		assertThat(jobs, is(notNullValue()));
+
+		if (jobs.length() > 0)
+		{
+			String jobId = jobs.getJSONObject(0).getString("id");
+			assertThat(jobId, is(notNullValue()));
+			response = client.jobDetails(jobId);
+			assertThat(response.status, is(200));
+			json = response.json();
+			assertThat(json, is(notNullValue()));
+			assertThat(json.getString("id"), is(jobId));
+		}
+	}
+
+	@Test
+	public void timeApiTest() throws IOException, InterruptedException
+	{
+		M2XResponse response;
+
+		response = client.time(null);
+		assertThat(response.status, is(200));
+		JSONObject json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getLong("seconds"), is(greaterThan(0L)));
+		assertThat(json.getLong("millis"), is(greaterThan(0L)));
+		assertThat(json.getString("iso8601"), is(notNullValue()));
+
+		response = client.time("seconds");
+		assertThat(response.status, is(200));
+		assertThat(response.raw, is(notNullValue()));
+
+		response = client.time("millis");
+		assertThat(response.status, is(200));
+		assertThat(response.raw, is(notNullValue()));
+
+		response = client.time("iso8601");
+		assertThat(response.status, is(200));
+		assertThat(response.raw, is(notNullValue()));
 	}
 }
