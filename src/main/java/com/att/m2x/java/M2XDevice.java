@@ -166,4 +166,58 @@ public final class M2XDevice extends M2XClassWithMetadata
 	{
 		return makeGet("/log", query);
 	}
+
+	/**
+	 * Retrieve the list of recent commands sent to the current device (as given by the API key).
+	 *
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#Device-s-List-of-Received-Commands">https://m2x.att.com/developer/documentation/v2/commands#Device-s-List-of-Received-Commands</a>
+	 */
+	public M2XResponse commands(String query) throws IOException
+	{
+		return makeRequest("GET", "/commands", query, null);
+	}
+
+	/**
+	 * Get details of a received command including the delivery information for this device.
+	 *
+	 * @param commandId the id of the command
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#Device-s-View-of-Command-Details">https://m2x.att.com/developer/documentation/v2/commands#Device-s-View-of-Command-Details</a>
+	 */
+	public M2XResponse commandDetails(String commandId) throws IOException
+	{
+		return makeRequest("GET", "/commands/" + commandId, null, null);
+	}
+
+	/**
+	 * Mark the given command as processed by the device, changing the status from "sent" to "processed".
+	 *
+	 * @param commandId the id of the command
+	 * @param jsonContent optional response data as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed">https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Processed</a>
+	 */
+	public M2XResponse processCommand(String commandId, String jsonContent) throws IOException
+	{
+		return makeRequest("POST", "/commands/" + commandId + "/process", null, jsonContent);
+	}
+
+	/**
+	 * Mark the given command as rejected by the device, changing the status from "sent" to "rejected".
+	 *
+	 * @param commandId the id of the command
+	 * @param jsonContent optional response data as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Rejected">https://m2x.att.com/developer/documentation/v2/commands#Device-Marks-a-Command-as-Rejected</a>
+	 */
+	public M2XResponse rejectCommand(String commandId, String jsonContent) throws IOException
+	{
+		return makeRequest("POST", "/commands/" + commandId + "/reject", null, jsonContent);
+	}
 }

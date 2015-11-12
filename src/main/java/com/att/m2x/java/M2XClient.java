@@ -325,6 +325,47 @@ public final class M2XClient
 		return makeRequest("GET", path, null, null);
 	}
 
+	// Retrieve the list of recent commands sent by the current user (as given by the API key).
+
+	/**
+	 * Retrieve the list of the most recent jobs that belong to the authenticated user.
+	 *
+	 * @param query query parameters (optional)
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#List-Sent-Commands">https://m2x.att.com/developer/documentation/v2/commands#List-Sent-Commands</a>
+	 */
+	public M2XResponse commands(String query) throws IOException
+	{
+		return makeRequest("GET", "/commands", query, null);
+	}
+
+	/**
+	 * Send a command with the given name to the given target devices.
+	 *
+	 * @param jsonContent parameters for the command to be send as JSON formatted string
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#Send-Command">https://m2x.att.com/developer/documentation/v2/commands#Send-Command</a>
+	 */
+	public M2XResponse sendCommand(String jsonContent) throws IOException
+	{
+		return makeRequest("POST", "/commands", null, jsonContent);
+	}
+
+	/**
+	 * Get details of a sent command including the delivery information for all devices that were targetted by the command at the time it was sent.
+	 *
+	 * @param commandId the id of the command
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/commands#View-Command-Details">https://m2x.att.com/developer/documentation/v2/commands#View-Command-Details</a>
+	 */
+	public M2XResponse commandDetails(String commandId) throws IOException
+	{
+		return makeRequest("GET", "/commands/" + commandId, null, null);
+	}
+
 	// Common
 
 	/**

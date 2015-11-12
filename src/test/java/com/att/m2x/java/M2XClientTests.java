@@ -9,9 +9,7 @@ import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -634,5 +632,93 @@ public class M2XClientTests extends M2XTestBase
 		response = client.time("iso8601");
 		assertThat(response.status, is(200));
 		assertThat(response.raw, is(notNullValue()));
+	}
+
+	@Test
+	public void commandsApiTest() throws IOException, InterruptedException
+	{
+		M2XResponse response;
+
+		response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("name", "TestDevice-" + testId);
+			put("visibility", "private");
+		}}));
+		assertThat(response.status, is(201));
+		String deviceId = response.json().getString("id");
+		assertThat(deviceId, is(notNullValue()));
+		device = client.device(deviceId);
+		Thread.sleep(1000);
+
+		response = device.details();
+		assertThat(response.status, is(200));
+		String deviceKey = response.json().getString("key");
+		assertThat(deviceKey, is(notNullValue()));
+
+		final String commandName1 = "TestCommand1-" + testId;
+		final String commandName2 = "TestCommand2-" + testId;
+		response = client.sendCommand("{\"name\":\"" + commandName1 +
+			"\",\"targets\":{\"devices\":[\"" + deviceId + "\"]}}");
+		assertThat(response.status, is(202));
+		response = client.sendCommand("{\"name\":\"" + commandName2 +
+			"\",\"targets\":{\"devices\":[\"" + deviceId + "\"]}}");
+		assertThat(response.status, is(202));
+		Thread.sleep(1000);
+
+		response = client.commands(M2XClient.mapToQuery(new HashMap<String, String>()
+		{{
+			put("name", commandName1);
+		}}));
+		assertThat(response.status, is(200));
+		JSONObject json = response.json();
+		assertThat(json, is(notNullValue()));
+		JSONArray commands = json.getJSONArray("commands");
+		assertThat(commands, is(notNullValue()));
+		assertThat(commands.length(), is(1));
+		String commandId1 = commands.getJSONObject(0).getString("id");
+		assertThat(commandId1, is(notNullValue()));
+
+		response = client.commandDetails(commandId1);
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("name"), comparesEqualTo(commandName1));
+
+		M2XClient deviceClient = new M2XClient(deviceKey);
+		M2XDevice device_ = deviceClient.device(deviceId);
+
+		response = device_.commands(null);
+		assertThat(response.status, is(200));
+		json = response.json();
+		commands = json.getJSONArray("commands");
+		assertThat(commands, is(notNullValue()));
+		assertThat(commands.length(), is(2));
+		assertThat(commands.getJSONObject(1).getString("id"), comparesEqualTo(commandId1));
+		String commandId2 = commands.getJSONObject(0).getString("id");
+		assertThat(commandId2, is(notNullValue()));
+
+		response = device_.commandDetails(commandId2);
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("name"), comparesEqualTo(commandName2));
+
+		response = device_.processCommand(commandId1, null);
+		assertThat(response.status, is(204));
+		Thread.sleep(1000);
+		response = device_.commandDetails(commandId1);
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("status"), is("processed"));
+
+		response = device_.rejectCommand(commandId2, null);
+		assertThat(response.status, is(204));
+		Thread.sleep(1000);
+		response = device_.commandDetails(commandId2);
+		assertThat(response.status, is(200));
+		json = response.json();
+		assertThat(json, is(notNullValue()));
+		assertThat(json.getString("status"), is("rejected"));
 	}
 }
