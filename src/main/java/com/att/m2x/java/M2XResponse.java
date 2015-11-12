@@ -52,16 +52,13 @@ public final class M2XResponse
 	{
 		if (this._json != null)
 			return this._json;
-		if (this.raw == null || this.raw.length() == 0)
+		if (this.raw == null || this.raw.isEmpty())
 			return null;
-		try
+		else
 		{
 			this._json = new JSONObject(this.raw);
+			return this._json;
 		}
-		catch (JSONException ex)
-		{
-		}
-		return this._json;
 	}
 
 	/**
