@@ -43,6 +43,18 @@ public final class M2XDevice extends M2XClassWithMetadata
 	}
 
 	/**
+	 * Read Device Location History.
+	 *
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Read-Device-Location-History"></a>
+	 */
+	public M2XResponse locationHistory(String query) throws IOException
+	{
+		return makeGet("/location/waypoints", query);
+	}
+
+	/**
 	 * Update the current location of the specified device.
 	 *
 	 * @param jsonContent parameters for the device to be updated as JSON formatted string

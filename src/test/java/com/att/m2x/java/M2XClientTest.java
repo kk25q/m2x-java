@@ -268,12 +268,26 @@ public class M2XClientTest extends M2XTestBase
 		}}));
 		assertThat(response.status, is(202));
 
+		response = device.updateLocation(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("name", "Second Test Location");
+			put("latitude", -12);
+			put("longitude", 34);
+		}}));
+		assertThat(response.status, is(202));
+
+		Thread.sleep(1000);
+
 		response = device.location();
-		if (response.status != 204)
-		{
-			assertThat(response.status, is(200));
-			assertThat(response.json().getString("name"), is("Test Location"));
-		}
+
+		assertThat(response.status, is(200));
+		assertThat(response.json().getString("name"), is("Second Test Location"));
+
+		response = device.locationHistory("limit=2");
+
+		JSONArray array = response.json().getJSONArray("waypoints");
+
+		assertThat(array.length(), is(2));
 
 		// stream
 
