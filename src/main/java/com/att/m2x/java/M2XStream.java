@@ -35,6 +35,21 @@ public final class M2XStream extends M2XClass
 	}
 
 	/**
+	* Update a data stream associated with the Device or distribution
+	* (if a stream with this name does not exist it gets created).
+	*
+	* @param jsonContent parameters for the stream to be created/updated as JSON formatted string
+	* @return the API response
+	* @throws IOException if an input or output exception occurred
+	* @see <a href="https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/device#Create-Update-Data-Stream</a>
+	* @see <a href="https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream">https://m2x.att.com/developer/documentation/v2/distribution#Create-Update-Data-Stream</a>
+	*/
+	public M2XResponse createOrUpdate(String jsonContent) throws IOException
+	{
+		return update(jsonContent);
+	}
+
+	/**
 	 * Update the current value of the stream.
 	 *
 	 * @param jsonContent parameters for the stream to be updated as JSON formatted string
