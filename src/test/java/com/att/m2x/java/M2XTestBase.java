@@ -22,7 +22,7 @@ public abstract class M2XTestBase
 		Properties props = new Properties();
 		try
 		{
-			props.loadFromXML(ClassLoader.getSystemResourceAsStream(getPathToKeys()));
+			props.loadFromXML(ClassLoader.getSystemResourceAsStream("m2x.test.keys.xml"));
 		}
 		catch (Exception ex)
 		{
@@ -33,11 +33,6 @@ public abstract class M2XTestBase
 			Assert.fail("key.master not found");
 		}
 		masterKey = props.getProperty("key.master");
-	}
-	private static String getPathToKeys()
-	{
-		String override = System.getenv("m2x.test.keys");
-		return override == null || override.isEmpty() ? "m2x.test.keys.xml" : override;
 	}
 
 	@Before
