@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class M2XClientTests extends M2XTestBase
+public class M2XClientTest extends M2XTestBase
 {
 	private M2XDistribution distribution = null;
 	private M2XDevice device = null;
