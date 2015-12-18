@@ -6,7 +6,7 @@
 
 	<groupId>com.att.m2x</groupId>
 	<artifactId>java</artifactId>
-	<version>4.0.0</version>
+	<version>5.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>Java M2X API Client</name>
