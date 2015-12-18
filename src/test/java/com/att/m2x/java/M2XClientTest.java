@@ -22,15 +22,6 @@ public class M2XClientTest extends M2XTestBase
 	private M2XKey key = null;
 	private M2XCollection collection = null;
 
-	public class TestClass
-	{
-		public int intval;
-		public String strval;
-
-		public int getIntval() { return this.intval; }
-		public String getStrval() { return this.strval; }
-	}
-
 	public class StreamValues
 	{
 		public StreamValue[] values;
@@ -153,13 +144,6 @@ public class M2XClientTest extends M2XTestBase
 			put("val2", "qwerty");
 		}});
 		assertThat(query, is("val1=1+1&val2=qwerty"));
-
-		query = M2XClient.objectToQuery(new TestClass()
-		{{
-			intval = 123;
-			strval = "qw rty";
-		}});
-		assertThat(query, is("intval=123&strval=qw+rty"));
 	}
 
 	@Test
@@ -173,13 +157,6 @@ public class M2XClientTest extends M2XTestBase
 			put("val2", "qw rty");
 		}});
 		assertThat(json, is("{\"val1\":123,\"val2\":\"qw rty\"}"));
-
-		json = M2XClient.jsonSerialize(new TestClass()
-		{{
-			intval = 123;
-			strval = "qw rty";
-		}});
-		assertThat(json, is("{\"strval\":\"qw rty\",\"intval\":123}"));
 	}
 
 	@Test
