@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,8 +22,8 @@ import org.json.JSONStringer;
  */
 public final class M2XClient
 {
-	public static final String API_ENDPOINT = "http://api-m2x.att.com/v2";
-	public static final String API_ENDPOINT_SECURE = "https://api-m2x.att.com/v2";
+	public static final String API_ENDPOINT = "https://api-m2x.att.com";
+	public static final String API_VERSION = "/v2";
 
 	static final String USER_AGENT;
 
@@ -405,12 +406,24 @@ public final class M2XClient
 	 */
 	public String buildUrl(String path, String query)
 	{
-		String result = this.endpoint;
-		if (path != null)
-			result += path;
-		if (query != null)
-			result += "?" + query;
-		return result;
+		String[] tokens = this.endpoint.split("://");
+		String scheme = tokens[0];
+		String host = tokens[1];
+		StringBuilder fullPath = new StringBuilder(API_VERSION);
+
+		if(path != null && !path.isEmpty())
+		{
+			fullPath.append(path);
+		}
+
+		try
+		{
+			URI uri = new URI(scheme, host, fullPath.toString(), query, null);
+			return uri.toString();
+		}catch(java.net.URISyntaxException ex)
+		{
+			throw new RuntimeException("Error building the URI: " + ex.getLocalizedMessage());
+		}
 	}
 
 	/**

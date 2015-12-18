@@ -13,6 +13,7 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static com.att.m2x.java.M2XClient.API_VERSION;
 
 public class M2XClientTest extends M2XTestBase
 {
@@ -121,16 +122,22 @@ public class M2XClientTest extends M2XTestBase
 		String url;
 
 		url = client.buildUrl(null, null);
-		assertThat(url, is(client.endpoint));
+		assertThat(url, is(client.endpoint + API_VERSION));
 
 		url = client.buildUrl("/path", null);
-		assertThat(url, is(client.endpoint + "/path"));
+		assertThat(url, is(client.endpoint + API_VERSION + "/path"));
 
 		url = client.buildUrl(null, "query");
-		assertThat(url, is(client.endpoint + "?query"));
+		assertThat(url, is(client.endpoint + API_VERSION + "?query"));
 
-		url = client.buildUrl("/path", "query");
-		assertThat(url, is(client.endpoint + "/path?query"));
+		url = client.buildUrl("/path", "foo=bar");
+		assertThat(url, is(client.endpoint + API_VERSION + "/path?foo=bar"));
+
+		url = client.buildUrl("/path", "foo=some bar with spaces");
+		assertThat(url, is(client.endpoint + API_VERSION + "/path?foo=some%20bar%20with%20spaces"));
+
+		url = client.buildUrl("/path", "foo=some bar with spaces&baz=bar");
+		assertThat(url, is(client.endpoint + API_VERSION + "/path?foo=some%20bar%20with%20spaces&baz=bar"));
 	}
 
 	@Test
