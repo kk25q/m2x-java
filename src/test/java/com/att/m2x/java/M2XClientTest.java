@@ -150,7 +150,7 @@ public class M2XClientTest extends M2XTestBase
 			put("val1", "1 1");
 			put("val2", "qwerty");
 		}});
-		assertThat(query, is("val1=1+1&val2=qwerty"));
+		assertThat(query, is("val1=1 1&val2=qwerty"));
 	}
 
 	@Test

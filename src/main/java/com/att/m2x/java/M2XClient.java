@@ -472,20 +472,13 @@ public final class M2XClient
 	public static String mapToQuery(Map<String, String> map)
 	{
 		StringBuilder sb = new StringBuilder();
-		Set<Map.Entry<String, String>> set =  map.entrySet();
-		for (Map.Entry<String, String> entry: set)
+
+		for (Map.Entry<String, String> entry: map.entrySet())
 		{
 			String value = entry.getValue();
 			if (sb.length() > 0)
 				sb.append('&');
-			try
-			{
-				value = value == null ? "" : java.net.URLEncoder.encode(value, "UTF-8");
-			}
-			catch (UnsupportedEncodingException ex)
-			{
-				continue;
-			}
+
 			sb.append(entry.getKey()).append('=').append(value);
 		}
 		return sb.toString();
