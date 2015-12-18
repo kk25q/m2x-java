@@ -388,7 +388,7 @@ public final class M2XClient
 		if (this.apiKey != null)
 			conn.setRequestProperty("X-M2X-KEY", this.apiKey);
 		conn.setRequestProperty("User-Agent", USER_AGENT);
-		conn.setRequestProperty("Accept", "application/json,text/plain,text/csv");
+		conn.setRequestProperty("Accept", "application/json,text/csv");
 		conn.setConnectTimeout(this.connectionTimeout);
 		conn.setReadTimeout(this.readTimeout);
 
