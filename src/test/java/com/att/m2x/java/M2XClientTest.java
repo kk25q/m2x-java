@@ -2,6 +2,7 @@ package com.att.m2x.java;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -146,7 +147,7 @@ public class M2XClientTest extends M2XTestBase
 	{
 		String query;
 
-		query = M2XClient.mapToQuery(new HashMap<String, String>()
+		query = M2XClient.mapToQuery(new LinkedHashMap<String, String>()
 		{{
 			put("val1", "1 1");
 			put("val2", "qwerty");
@@ -166,7 +167,7 @@ public class M2XClientTest extends M2XTestBase
 	{
 		String json;
 
-		json = M2XClient.jsonSerialize(new HashMap<String, Object>()
+		json = M2XClient.jsonSerialize(new LinkedHashMap<String, Object>()
 		{{
 			put("val1", 123);
 			put("val2", "qw rty");
