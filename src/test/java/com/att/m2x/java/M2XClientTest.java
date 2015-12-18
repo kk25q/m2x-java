@@ -29,11 +29,13 @@ public class M2XClientTest extends M2XTestBase
 		public int getIntval() { return this.intval; }
 		public String getStrval() { return this.strval; }
 	}
+
 	public class StreamValues
 	{
 		public StreamValue[] values;
 		public StreamValue[] getValues() { return this.values; }
 	}
+
 	public class StreamValue
 	{
 		public Date timestamp;
@@ -47,11 +49,13 @@ public class M2XClientTest extends M2XTestBase
 		public DeviceLocationFilter location;
 		public DeviceLocationFilter getLocation() { return this.location; }
 	}
+
 	public class DeviceLocationFilter
 	{
 		public WithinCircleFilter within_circle;
 		public WithinCircleFilter getWithin_circle() { return this.within_circle; }
 	}
+
 	public class WithinCircleFilter
 	{
 		public LocationPointParams center;
@@ -59,6 +63,7 @@ public class M2XClientTest extends M2XTestBase
 		public LocationPointParams getCenter() { return this.center; }
 		public RadiusParams getRadius() { return this.radius; }
 	}
+
 	public class LocationPointParams
 	{
 		public double latitude;
@@ -66,6 +71,7 @@ public class M2XClientTest extends M2XTestBase
 		public double getLatitude() { return this.latitude; }
 		public double getLongitude() { return this.longitude; }
 	}
+
 	public class RadiusParams
 	{
 		public int km;
@@ -80,27 +86,32 @@ public class M2XClientTest extends M2XTestBase
 			delete(this.collection);
 			this.collection = null;
 		}
+
 		if (this.key != null)
 		{
 			delete(this.key);
 			this.key = null;
 		}
+
 		if (this.stream != null)
 		{
 			delete(this.stream);
 			this.stream = null;
 		}
+
 		if (this.device != null)
 		{
 			delete(this.device);
 			this.device = null;
 		}
+
 		if (this.distribution != null)
 		{
 			delete(this.distribution);
 			this.distribution = null;
 		}
 	}
+
 	private void delete(M2XClass entity)
 	{
 		try
