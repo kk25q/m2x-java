@@ -101,7 +101,7 @@ Refer to the documentation on each class for further usage instructions.
 	}}));
 ```
 
-You can find this code in [M2XClientTest.java](src/test/java/com/att/m2x/client/M2XClientTest.java).
+You can find this code in [M2XClientTest.java](src/test/java/com/att/m2x/java/M2XClientTest.java).
 These tests have a lot of examples for the most of M2X API methods.
 To run the tests you should specify your Master API Key in the m2x.test.keys.xml resource file.
 
