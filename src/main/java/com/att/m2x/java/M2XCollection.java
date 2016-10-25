@@ -25,4 +25,32 @@ public final class M2XCollection extends M2XClassWithMetadata
 	{
 		return concat(M2XCollection.URL_PATH, "/", this.collectionId, path);
 	}
+	
+	/**
+	 * Add an existing device to an existing collection
+	 *
+	 * @param deviceId the id of the device
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/collections#Add-device-to-collection">https://m2x.att.com/developer/documentation/v2/collections#Add-device-to-collection</a>
+	 */
+	public M2XResponse addDevice(String deviceId) throws IOException
+	{
+		return makePut(concat("/devices/", deviceId), null);
+	}
+	
+	/**
+	 * Remove an existing device from an existing collection
+	 *
+	 * @param deviceId the id of the device
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/collections#Remove-device-from-collection">https://m2x.att.com/developer/documentation/v2/collections#Remove-device-from-collection</a>
+	 */
+	public M2XResponse removeDevice(String deviceId) throws IOException
+	{
+		return makeDelete(concat("/devices/", deviceId), null);
+	}
+
+
 }

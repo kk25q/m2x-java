@@ -394,7 +394,7 @@ public class M2XClientTest extends M2XTestBase
 	{
 		M2XResponse response;
 
-		// destribution
+		// distribution
 
 		response = client.createDistribution(M2XClient.jsonSerialize(new HashMap<String, Object>()
 		{{
@@ -535,6 +535,7 @@ public class M2XClientTest extends M2XTestBase
 		String collectionId = response.json().getString("id");
 		assertThat(collectionId, is(notNullValue()));
 		assertThat(collectionId.length(), greaterThan(0));
+		Thread.sleep(1000);
 		collection = client.collection(collectionId);
 
 		response = collection.details();
@@ -592,6 +593,28 @@ public class M2XClientTest extends M2XTestBase
 		json = response.json();
 		assertThat(json, is(notNullValue()));
 		assertThat(json.getString("value"), is("value3"));
+		
+		// devices
+		Thread.sleep(1000);
+
+		// add device to collection
+		response = client.createDevice(M2XClient.jsonSerialize(new HashMap<String, Object>()
+		{{
+			put("name", "TestDevice-" + testId);
+			put("visibility", "private");
+		}}));
+		assertThat(response.status, is(201));
+		String deviceId = response.json().getString("id");
+		device = client.device(deviceId);
+		Thread.sleep(1000);
+		
+		response = collection.addDevice(deviceId);
+		assertThat(response.status, is(204));	// No content
+		Thread.sleep(1000);
+		
+		// remove device from collection
+		response = collection.removeDevice(deviceId);
+		assertThat(response.status, is(204));	// No content
 	}
 
 	@Test
