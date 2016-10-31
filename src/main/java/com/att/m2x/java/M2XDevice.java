@@ -1,6 +1,13 @@
 package com.att.m2x.java;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Wrapper for AT&amp;T M2X Device API
@@ -54,6 +61,29 @@ public final class M2XDevice extends M2XClassWithMetadata
 		return makeGet("/location/waypoints", query);
 	}
 
+	
+	/**
+	 * Delete Device Location History.
+	 *
+	 * @param from
+	 * @param to
+	 * @return the API response
+	 * @throws IOException if an input or output exception occurred
+	 * @see <a href="https://m2x.att.com/developer/documentation/v2/device#Delete-Location-History"></a>
+	 */
+	public M2XResponse deleteLocationHistory(final Date from, final Date end) throws IOException
+	{
+		final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		@SuppressWarnings("serial")
+		Map<String, Object> queryParams = new HashMap<String, Object>() {{
+			put("from", dateFormat.format(from));
+			put("end", dateFormat.format(end));
+		}};
+		return makeDelete("/location/waypoints", null, M2XClient.jsonSerialize(queryParams));
+	}
+	
+	
 	/**
 	 * Update the current location of the specified device.
 	 *

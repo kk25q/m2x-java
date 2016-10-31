@@ -260,6 +260,7 @@ public class M2XClientTest extends M2XTestBase
 		assertThat(response.status, is(200));
 		assertThat(response.json().getString("description"), is("test"));
 
+		// Location
 		response = device.updateLocation(M2XClient.jsonSerialize(new HashMap<String, Object>()
 		{{
 			put("name", "Test Location");
@@ -288,6 +289,12 @@ public class M2XClientTest extends M2XTestBase
 		JSONArray array = response.json().getJSONArray("waypoints");
 
 		assertThat(array.length(), is(2));
+
+		// Delete Location History
+		final Date locationHistoryFrom = new Date(now.getTime() - 120000);
+		final Date locationHistoryEnd = new Date(now.getTime() + 120000);	// Account for any time differential with server.
+		response = device.deleteLocationHistory(locationHistoryFrom, locationHistoryEnd);
+		assertThat(response.status, is(204));
 
 		// stream
 

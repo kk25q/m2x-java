@@ -37,6 +37,10 @@ public abstract class M2XClass
 	{
 		return makeRequest("DELETE", path, query, null);
 	}
+	public M2XResponse makeDelete(String path, String query, String jsonContent) throws IOException
+	{
+		return makeRequest("DELETE", path, query, jsonContent);
+	}
 
 	public M2XResponse makeRequest(String method, String path, String query, String jsonContent)
 		throws IOException
