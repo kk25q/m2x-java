@@ -4,6 +4,6 @@
 	<comment>
 		As integration tests run against the live system please specify here all required keys
 	</comment>
-	<entry key="key.master"></entry>
+	<entry key="key.master">10ade758d7839efcc4660fe11a0adcf8</entry>
 
 </properties>
